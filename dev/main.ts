@@ -1,25 +1,24 @@
-/// <reference path="car.ts"/>
-/// <reference path="rock.ts"/>
+/// <reference path="cat.ts"/>
+/// <reference path="util.ts"/>
+
 
 class Game {
 
-    private car : Car;
-    private rock : Rock;
+    private cat : Cat;
+   
+    public static instance:Game;
     
+    private score: number = 0;
+
     constructor() {
-        this.car = new Car(0,220);
-        this.rock = new Rock();
+        this.cat = new Cat(5,200);
+        
         
         requestAnimationFrame(() => this.gameLoop());
     }
 
     private gameLoop(){
-        this.car.move();
-        this.rock.move();
-        this.colissionCheck();
-        
-        
-
+        this.cat.move();
         requestAnimationFrame(() => this.gameLoop());
         
     }
@@ -29,26 +28,10 @@ class Game {
     }
     
 
-public colissionCheck(){ 
-    
-  
-  
-    if(this.car.getX() > this.rock.getX() - this.car.getWidth() ){
-        console.log("colission");
-        this.car.brake();
-        this.rock.fall();
-
-
-    }
-    
-    
 }
-
-
-} 
 
 
 // load
 window.addEventListener("load", function() {
-    new Game();
+   let g = new Game();
 });

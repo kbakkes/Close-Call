@@ -17,7 +17,7 @@ body * {
 container {
     background-image: url(../images/background.png);
     background-repeat: no-repeat;
-    width:800px; height:600px;
+    width:1000px; height:1000px;
     left: 50%; top: 50%;
     transform: translate(-50%, -50%);
     overflow:hidden;
@@ -29,9 +29,14 @@ score {
     padding:20px;
 }
 
-car {
-    background-image: url(../images/car.png);
-    width:145px; height: 45px;
+cat {
+    background-image: url(../images/cat.png);
+    width:145px; height: 128px;
+}
+
+catRight{
+    background-image: url(../images/catRight.png);
+    width:144px; height: 128px;
 }
 
 wheel {

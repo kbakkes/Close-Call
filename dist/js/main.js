@@ -12,121 +12,170 @@ var GameObject = (function () {
     function GameObject() {
         this.x = 0;
         this.y = 0;
+        this.width = 0;
+        this.height = 0;
     }
     GameObject.prototype.createDiv = function (divname) {
         var container = document.getElementById("container");
         this.div = document.createElement(divname);
         container.appendChild(this.div);
     };
+    GameObject.prototype.getX = function () {
+        return this.x;
+    };
+    GameObject.prototype.getY = function () {
+        return this.y;
+    };
+    GameObject.prototype.getWidth = function () {
+        return this.width;
+    };
+    GameObject.prototype.getHeight = function () {
+        return this.height;
+    };
     return GameObject;
 }());
-var Wheel = (function (_super) {
-    __extends(Wheel, _super);
-    function Wheel(x, y) {
+var Cat = (function (_super) {
+    __extends(Cat, _super);
+    function Cat(x, y) {
         var _this = _super.call(this) || this;
-        _super.prototype.createDiv.call(_this, "wheel");
-        _this.y = y;
-        _this.x = x;
-        _this.div.style.transform = "translate(" + x + "px, " + y + "px)";
-        return _this;
-    }
-    return Wheel;
-}(GameObject));
-var Car = (function (_super) {
-    __extends(Car, _super);
-    function Car(x, y) {
-        var _this = _super.call(this) || this;
-        _super.prototype.createDiv.call(_this, "car");
+        _this.leftSpeed = 0;
+        _this.rightSpeed = 0;
+        _this.downSpeed = 0;
+        _this.upSpeed = 0;
+        _super.prototype.createDiv.call(_this, "cat");
         _this.speed = 4;
-        _this.x = x;
-        _this.y = y;
-        _this.wheel1 = new Wheel(_this.x, _this.y);
-        _this.wheel2 = new Wheel(20, 100);
-        window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
-        _this.width = 145;
-        _this.move();
+        _this.upKey = 87;
+        _this.downKey = 83;
+        _this.leftKey = 65;
+        _this.rightKey = 68;
+        _this.behaviour = new Idle(_this);
+        _this.x = 100;
+        _this.y = 220;
         return _this;
     }
-    Car.prototype.move = function () {
-        if (this.speed > 0) {
-            this.x += this.speed;
-        }
-        if (this.braking == true) {
-            this.speed = 0;
-        }
+    Cat.prototype.move = function () {
+        this.behaviour.move();
         this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
     };
-    Car.prototype.onKeyDown = function (e) {
-        console.log("key down");
-        this.braking = true;
-    };
-    Car.prototype.getX = function () {
-        return this.x;
-    };
-    Car.prototype.getWidth = function () {
-        return this.width;
-    };
-    Car.prototype.brake = function () {
-        this.speed = 0;
-    };
-    return Car;
+    return Cat;
 }(GameObject));
-var Rock = (function (_super) {
-    __extends(Rock, _super);
-    function Rock() {
-        var _this = _super.call(this) || this;
-        _super.prototype.createDiv.call(_this, "rock");
-        _this.speed = 10;
-        _this.move();
-        _this.x = 490;
-        _this.y = 210;
-        _this.width = 62;
-        return _this;
+var FaceRight = (function () {
+    function FaceRight(c) {
     }
-    Rock.prototype.move = function () {
-        this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+    FaceRight.prototype.update = function () {
     };
-    Rock.prototype.getX = function () {
-        return this.x;
+    FaceRight.prototype.onKeyDown = function () {
     };
-    Rock.prototype.getWidth = function () {
-        return this.width;
+    FaceRight.prototype.onKeyUp = function () {
     };
-    Rock.prototype.fall = function () {
-        this.y += this.speed;
-        if (this.y >= 600) {
-            this.speed = 0;
+    FaceRight.prototype.move = function () {
+    };
+    return FaceRight;
+}());
+var Idle = (function () {
+    function Idle(c) {
+        var _this = this;
+        this.cat = c;
+        window.addEventListener("keydown", function (event) { return _this.onKeyDown(event); });
+        window.addEventListener("keyup", function (e) { return _this.onKeyUp(event); });
+    }
+    Idle.prototype.update = function () {
+    };
+    Idle.prototype.onKeyDown = function (event) {
+        var x = event.which || event.keyCode;
+        console.log(x);
+        switch (x) {
+            case this.cat.upKey:
+                this.cat.upSpeed = 5;
+                console.log("W");
+                this.cat.y -= this.cat.upSpeed;
+                break;
+            case this.cat.downKey:
+                this.cat.downSpeed = 5;
+                console.log("S");
+                this.cat.y += this.cat.downSpeed;
+                break;
+            case this.cat.leftKey:
+                this.cat.leftSpeed = 5;
+                console.log("A");
+                this.cat.x -= this.cat.leftSpeed;
+                this.cat.div.style.backgroundImage = "url('images/catRight.png')";
+                break;
+            case this.cat.rightKey:
+                this.cat.rightSpeed = 5;
+                console.log("D");
+                this.cat.x += 10;
+                this.cat.div.style.backgroundImage = "url('images/cat.png')";
+                break;
         }
     };
-    return Rock;
-}(GameObject));
+    Idle.prototype.onKeyUp = function (event) {
+        this.cat.upSpeed = this.cat.downSpeed = this.cat.leftSpeed = this.cat.rightSpeed = 0;
+    };
+    Idle.prototype.move = function () {
+        this.cat.x = this.cat.x - this.cat.leftSpeed + this.cat.rightSpeed;
+        this.cat.y = this.cat.y - this.cat.upSpeed + this.cat.downSpeed;
+        this.cat.div.style.transform = "translate(" + this.cat.x + "px, " + this.cat.y + "px)";
+    };
+    return Idle;
+}());
+var Util = (function () {
+    function Util() {
+    }
+    Util.prototype.checkColission = function (obj1, obj2) {
+        if (obj1.getX() < obj2.getX() + obj2.getWidth() &&
+            obj1.getX() + obj1.getWidth() > obj2.getX() &&
+            obj1.getY() < obj2.getY() + obj2.getHeight() &&
+            obj1.getHeight() + obj1.getY() > obj2.getY()) {
+            return true;
+        }
+    };
+    return Util;
+}());
 var Game = (function () {
     function Game() {
         var _this = this;
-        this.car = new Car(0, 220);
-        this.rock = new Rock();
+        this.score = 0;
+        this.cat = new Cat(5, 200);
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
     Game.prototype.gameLoop = function () {
         var _this = this;
-        this.car.move();
-        this.rock.move();
-        this.colissionCheck();
+        this.cat.move();
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
     Game.prototype.endGame = function () {
         document.getElementById("score").innerHTML = "Score : 0";
     };
-    Game.prototype.colissionCheck = function () {
-        if (this.car.getX() > this.rock.getX() - this.car.getWidth()) {
-            console.log("colission");
-            this.car.brake();
-            this.rock.fall();
-        }
-    };
     return Game;
 }());
 window.addEventListener("load", function () {
-    new Game();
+    var g = new Game();
 });
+var Moving = (function () {
+    function Moving(c) {
+    }
+    Moving.prototype.update = function () {
+    };
+    Moving.prototype.onKeyDown = function () {
+    };
+    Moving.prototype.onKeyUp = function () {
+    };
+    Moving.prototype.move = function () {
+    };
+    return Moving;
+}());
+var MovingRight = (function () {
+    function MovingRight(c) {
+    }
+    MovingRight.prototype.update = function () {
+    };
+    MovingRight.prototype.onKeyDown = function () {
+    };
+    MovingRight.prototype.onKeyUp = function () {
+    };
+    MovingRight.prototype.move = function () {
+    };
+    return MovingRight;
+}());
 //# sourceMappingURL=main.js.map
