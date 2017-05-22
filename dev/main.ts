@@ -2,8 +2,6 @@
 /// <reference path="util.ts"/>
 /// <reference path="ring.ts"/>
 
-
-
 class Game {
 
     private cat : Cat;
@@ -30,7 +28,6 @@ class Game {
     private gameLoop(){
         this.cat.move();
 
-
         for(let i=0; i<12; i++){
             this.util.checkColission(this.cat,this.rings[i]);
             this.rings[i].move();
@@ -47,7 +44,6 @@ class Game {
     
 
 }
-
 
 // load
 window.addEventListener("load", function() {

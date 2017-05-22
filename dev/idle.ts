@@ -10,14 +10,11 @@ class Idle implements Behaviour{
         window.addEventListener("keydown", (event:KeyboardEvent) => this.onKeyDown(event));
         window.addEventListener("keyup", (e:KeyboardEvent) => this.onKeyUp(event));
 
-       
     }
-
 
         update(){
 
         }
-
 
         onKeyDown(event){
             var x = event.which || event.keyCode;
