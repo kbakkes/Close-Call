@@ -39,5 +39,9 @@ class GameObject {
         return this.height;
     }
 
+    public delete(){
+        
+    }
+
 
 }

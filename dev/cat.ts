@@ -5,11 +5,12 @@ class Cat extends GameObject {
 
     public behaviour:Behaviour; 
     public speed:number;
-    protected width:number;
-    private game:Game;
+    
 
     public x: number;
     public y: number;
+    public width:number;
+    public height:number;
 
     public upKey : number;
     public downKey : number;
@@ -27,7 +28,12 @@ class Cat extends GameObject {
 
         super.createDiv("cat");
         this.speed = 4;
+        
 
+        // image afmetingen
+        this.width = 146;
+        this.height = 128;
+        
       
 
         this.upKey = 87;
