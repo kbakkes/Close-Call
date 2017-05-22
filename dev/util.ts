@@ -1,14 +1,6 @@
 /// <reference path="gameObject.ts"/>
 
 class Util{
-    
-    constructor(){
-
-        
-    }
- 
-
-
 
     public checkColission(obj1:GameObject, obj2:GameObject):Boolean{
         if (obj1.getX() < obj2.getX() + obj2.getWidth() &&

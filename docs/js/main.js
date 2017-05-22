@@ -137,11 +137,13 @@ var Game = (function () {
         var _this = this;
         this.score = 0;
         this.cat = new Cat(5, 200);
+        this.ring = new Ring(100, 200);
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
     Game.prototype.gameLoop = function () {
         var _this = this;
         this.cat.move();
+        this.ring.move();
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
     Game.prototype.endGame = function () {
@@ -178,4 +180,18 @@ var MovingRight = (function () {
     };
     return MovingRight;
 }());
+var Ring = (function (_super) {
+    __extends(Ring, _super);
+    function Ring(x, y) {
+        var _this = _super.call(this) || this;
+        _this.x = x;
+        _this.y = y;
+        _super.prototype.createDiv.call(_this, "ring");
+        return _this;
+    }
+    Ring.prototype.move = function () {
+        this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+    };
+    return Ring;
+}(GameObject));
 //# sourceMappingURL=main.js.map

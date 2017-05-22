@@ -39,21 +39,12 @@ catRight{
     width:144px; height: 128px;
 }
 
-wheel {
-    background-image: url(../images/wheel.png);
-    width:22px; height: 22px;
+ring {
+    background-image: url(../images/ring.png);
+    width:50px; height: 50px;
 }
 
-rock {
-    background-image: url(../images/rock.png);
-    width:62px; height: 62px;
-}
 
-cloud {
-    background-image: url(../images/cloud.png);
-    width:150px; height: 57px;
-    animation: cloudanimation 15s linear infinite;
-}
 
 
 

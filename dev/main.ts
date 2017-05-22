@@ -5,6 +5,7 @@
 class Game {
 
     private cat : Cat;
+    private ring : Ring;
    
     public static instance:Game;
     
@@ -12,6 +13,9 @@ class Game {
 
     constructor() {
         this.cat = new Cat(5,200);
+        this.ring = new Ring(100,200);
+        
+        
         
         
         requestAnimationFrame(() => this.gameLoop());
@@ -19,7 +23,10 @@ class Game {
 
     private gameLoop(){
         this.cat.move();
+        this.ring.move();
+        
         requestAnimationFrame(() => this.gameLoop());
+        
         
     }
 

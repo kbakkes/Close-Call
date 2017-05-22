@@ -1,4 +1,3 @@
-
 /// <reference path="gameObject.ts"/>
 
 class Cat extends GameObject {
