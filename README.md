@@ -1,4 +1,6 @@
-# PRG08-Week1-oefening2
+# Ring Collector
+
+## https://kbakkes.github.io/Ring-Collector/
 
 ## Close Call
 
