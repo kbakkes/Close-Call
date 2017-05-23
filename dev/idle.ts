@@ -21,7 +21,7 @@ class Idle implements Behaviour{
            
             
             console.log(x);
-     
+            // Verschillende functies voor als er op WASD wordt ingedrukt. 
              switch (x){
             case this.cat.upKey:
             this.cat.upSpeed = 5;
@@ -55,7 +55,7 @@ class Idle implements Behaviour{
  
             
     }
-
+    // wanneer een van de WASD toetsen wordt losgelaten gaat de speed weer naar 0 
     onKeyUp(event){
         this.cat.upSpeed = this.cat.downSpeed = this.cat.leftSpeed = this.cat.rightSpeed = 0;
     }
