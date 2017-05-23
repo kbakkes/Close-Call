@@ -6,7 +6,7 @@
 
 
 
-![UML](../images/closecall.png?raw=true "UML")
+![UML](docs/images/ringCollector.png?raw=true "UML")
 
 ### Gameplay
 
@@ -22,7 +22,6 @@
 
 
 ## Inheritance
-
 
 
 ## Composition
