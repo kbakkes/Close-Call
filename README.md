@@ -40,7 +40,7 @@ Dit is toegepast bij de Behaviour Interface. Deze interface bevat functies zoals
 `move()`, `onKeyDown()` en `onKeyUp();`. 
 
 ### Static Utility Method
-In game.ts zit een public static instance van game. Vervolgens wordt bij het laden
+In `game.ts` zit een public static instance van game. Vervolgens wordt bij het laden
 van de game `let g = new Game();` aangeroepen.
 
 ### Singleton 
