@@ -35,7 +35,7 @@ class Cat extends GameObject {
         this.height = 128;
         
       
-
+        // Keyboard Unicodes
         this.upKey = 87;
         this.downKey = 83;
         this.leftKey = 65;
@@ -43,6 +43,8 @@ class Cat extends GameObject {
        
        this.behaviour = new Idle(this);
 
+
+        // startpositie
          this.x = 100;
          this.y = 220;
        
