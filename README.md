@@ -6,7 +6,7 @@
 
 
 
-![UML](closecall.png?raw=true "UML")
+![UML](../images/closecall.png?raw=true "UML")
 
 ### Gameplay
 
