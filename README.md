@@ -2,12 +2,9 @@
 
 ## https://kbakkes.github.io/Ring-Collector/
 
-## Close Call
 
-### Project opzetten
 
-- Bekijk de UML
-- Vul het project aan op punten die niet gelijk zijn aan de UML
+
 
 ![UML](closecall.png?raw=true "UML")
 

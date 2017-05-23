@@ -76,19 +76,6 @@ var Destroyed = (function () {
     };
     return Destroyed;
 }());
-var FaceRight = (function () {
-    function FaceRight(c) {
-    }
-    FaceRight.prototype.update = function () {
-    };
-    FaceRight.prototype.onKeyDown = function () {
-    };
-    FaceRight.prototype.onKeyUp = function () {
-    };
-    FaceRight.prototype.move = function () {
-    };
-    return FaceRight;
-}());
 var Float = (function () {
     function Float(c) {
     }
@@ -102,6 +89,67 @@ var Float = (function () {
     };
     return Float;
 }());
+var Utils = (function () {
+    function Utils() {
+    }
+    Utils.prototype.checkColission = function (obj1, obj2) {
+        if (obj1.getX() < obj2.getX() + obj2.getWidth() &&
+            obj1.getX() + obj1.getWidth() > obj2.getX() &&
+            obj1.getY() < obj2.getY() + obj2.getHeight() &&
+            obj1.getHeight() + obj1.getY() > obj2.getY()) {
+            console.log("colission");
+            return true;
+        }
+    };
+    return Utils;
+}());
+var Ring = (function (_super) {
+    __extends(Ring, _super);
+    function Ring(x, y) {
+        var _this = _super.call(this) || this;
+        _this.x = x;
+        _this.y = y;
+        _this.width = 50;
+        _this.height = 50;
+        _super.prototype.createDiv.call(_this, "ring");
+        return _this;
+    }
+    Ring.prototype.move = function () {
+        this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+    };
+    return Ring;
+}(GameObject));
+var Game = (function () {
+    function Game() {
+        var _this = this;
+        this.rings = new Array();
+        this.score = 0;
+        this.cat = new Cat(5, 200);
+        this.utils = new Utils();
+        for (var i = 0; i < 12; i += 1) {
+            var x = Math.floor(Math.random() * 900) + 100;
+            var y = Math.floor(Math.random() * 900) + 100;
+            this.rings.push(new Ring(x, y));
+        }
+        requestAnimationFrame(function () { return _this.gameLoop(); });
+    }
+    Game.prototype.gameLoop = function () {
+        var _this = this;
+        this.cat.move();
+        for (var i = 0; i < 12; i++) {
+            this.utils.checkColission(this.cat, this.rings[i]);
+            this.rings[i].move();
+        }
+        requestAnimationFrame(function () { return _this.gameLoop(); });
+    };
+    Game.prototype.endGame = function () {
+        document.getElementById("score").innerHTML = "Score : 0";
+    };
+    return Game;
+}());
+window.addEventListener("load", function () {
+    var g = new Game();
+});
 var Idle = (function () {
     function Idle(c) {
         var _this = this;
@@ -149,68 +197,6 @@ var Idle = (function () {
     };
     return Idle;
 }());
-var Util = (function () {
-    function Util() {
-    }
-    Util.prototype.checkColission = function (obj1, obj2) {
-        if (obj1.getX() < obj2.getX() + obj2.getWidth() &&
-            obj1.getX() + obj1.getWidth() > obj2.getX() &&
-            obj1.getY() < obj2.getY() + obj2.getHeight() &&
-            obj1.getHeight() + obj1.getY() > obj2.getY()) {
-            console.log("colission");
-            console.log();
-            return true;
-        }
-    };
-    return Util;
-}());
-var Ring = (function (_super) {
-    __extends(Ring, _super);
-    function Ring(x, y) {
-        var _this = _super.call(this) || this;
-        _this.x = x;
-        _this.y = y;
-        _this.width = 50;
-        _this.height = 50;
-        _super.prototype.createDiv.call(_this, "ring");
-        return _this;
-    }
-    Ring.prototype.move = function () {
-        this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
-    };
-    return Ring;
-}(GameObject));
-var Game = (function () {
-    function Game() {
-        var _this = this;
-        this.rings = new Array();
-        this.score = 0;
-        this.cat = new Cat(5, 200);
-        this.util = new Util();
-        for (var i = 0; i < 12; i += 1) {
-            var x = Math.floor(Math.random() * 900) + 100;
-            var y = Math.floor(Math.random() * 900) + 100;
-            this.rings.push(new Ring(x, y));
-        }
-        requestAnimationFrame(function () { return _this.gameLoop(); });
-    }
-    Game.prototype.gameLoop = function () {
-        var _this = this;
-        this.cat.move();
-        for (var i = 0; i < 12; i++) {
-            this.util.checkColission(this.cat, this.rings[i]);
-            this.rings[i].move();
-        }
-        requestAnimationFrame(function () { return _this.gameLoop(); });
-    };
-    Game.prototype.endGame = function () {
-        document.getElementById("score").innerHTML = "Score : 0";
-    };
-    return Game;
-}());
-window.addEventListener("load", function () {
-    var g = new Game();
-});
 var Moving = (function () {
     function Moving(c) {
     }
@@ -223,18 +209,5 @@ var Moving = (function () {
     Moving.prototype.move = function () {
     };
     return Moving;
-}());
-var MovingRight = (function () {
-    function MovingRight(c) {
-    }
-    MovingRight.prototype.update = function () {
-    };
-    MovingRight.prototype.onKeyDown = function () {
-    };
-    MovingRight.prototype.onKeyUp = function () {
-    };
-    MovingRight.prototype.move = function () {
-    };
-    return MovingRight;
 }());
 //# sourceMappingURL=main.js.map

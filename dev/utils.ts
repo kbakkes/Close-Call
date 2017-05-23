@@ -1,6 +1,6 @@
-/// <reference path="main.ts"/>
+/// <reference path="game.ts"/>
 
-class Util{
+class Utils{
 
     public checkColission(obj1:GameObject, obj2:GameObject) {
         if (obj1.getX() < obj2.getX() + obj2.getWidth() &&
@@ -8,7 +8,6 @@ class Util{
         obj1.getY() < obj2.getY() + obj2.getHeight() &&
         obj1.getHeight() + obj1.getY() > obj2.getY() ) {
             console.log("colission");
-            console.log();
 
             return true; 
                 }
