@@ -133,6 +133,12 @@ var Game = (function () {
         }
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
+    Game.getInstance = function () {
+        if (Game.instance == null) {
+            Game.instance = new Game();
+        }
+        return Game.instance;
+    };
     Game.prototype.gameLoop = function () {
         var _this = this;
         this.cat.move();

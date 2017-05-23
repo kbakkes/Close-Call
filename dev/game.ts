@@ -25,6 +25,13 @@ x
         requestAnimationFrame(() => this.gameLoop());
     }
 
+        public static getInstance(){
+        if(Game.instance == null){
+            Game.instance = new Game();
+        }
+        return Game.instance;
+    }
+
     private gameLoop(){
         this.cat.move();
 
