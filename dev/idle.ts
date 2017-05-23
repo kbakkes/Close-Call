@@ -39,14 +39,14 @@ class Idle implements Behaviour{
             this.cat.leftSpeed = 5;
             console.log("A");
             this.cat.x -= this.cat.leftSpeed;
-            this.cat.div.style.backgroundImage = "url('images/catRight.png')";  
+            this.cat.div.style.backgroundImage = "url('images/catRight.png')";   // de kat draait de juiste richting
             break;
 
             case this.cat.rightKey:
             this.cat.rightSpeed = 5;
             console.log("D");
             this.cat.x += 10;
-            this.cat.div.style.backgroundImage = "url('images/cat.png')";  
+            this.cat.div.style.backgroundImage = "url('images/cat.png')";   // de kat draait de juiste richting
            
            
             break;
