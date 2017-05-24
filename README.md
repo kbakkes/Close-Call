@@ -2,61 +2,68 @@
 
 ## https://kbakkes.github.io/Ring-Collector/
 
-## Close Call
+## UML 
+### UML Notes
+#### Werkende onderdelen zijn: 
+- Game class
+- gameObject class
+- Utils class
+- Cat class
+- Behaviour Interface
+- Idle class
 
-### Project opzetten
+![UML](docs/images/ringCollector.png?raw=true "UML")
 
-- Bekijk de UML
-- Vul het project aan op punten die niet gelijk zijn aan de UML
 
-![UML](closecall.png?raw=true "UML")
+## Gameplay
 
-### Gameplay
+- Je kunt Dex-Starr de kat bewegen door de game.
+- Het bewegen doe je met behulp van de WASD toetsen. 
+- Op het scherm verschijnen ringen met verschillende kleuren. 
+- Als je een rode ring oppakt wordt je score hoger
+- Als je een groene ring oppakt gaat er een van de 3 lifes weg
+- Als je 0 lifes hebt eindigd het spel. 
 
-- De auto komt aanrijden van links over het plateau. De snelheid is random.
-- Zodra je op een toets drukt begint de auto met afremmen. 
-- Als de auto het rotsblok raakt, stort het rotsblok omlaag. Je score is 0.
-- Als je voor het rotsblok tot stilstand komt dan is je score hoger naar mate je dichter bij het blok tot stilstand bent gekomen.
+### Installatie
 
-### Tips
+1. Download het project van GitHub
+2. Open het zip-bestand en ga naar _Ring Collector->Docs->Index.html_
+3. Begin met het spelen van Ring Collector
 
-- De html heeft een `<container>` element waarin alle game elementen geplaatst worden.
-- Met CSS plaats je de container in het midden van het scherm.
-- Maak eerst de gameobject class.
-- De game loop roept de move functie van de auto en de rots aan. 
-- Als je aan car een verwijzing naar game meegeeft, dan kan car ook functies van game aanroepen, zoals game over.
-- De speed van de auto bepaalt hoe veel de auto verplaatst per loop.
-- De rots heeft een snelheid van 0, maar die wordt verhoogd als de auto de rots raakt.
-- De rots staat op x 335, dus als de x van de auto (plus de breedte) 335 is, dan raakt de auto de rots.
-- Als de car zijn eigen speed vermenigvuldigt met 0.9 bereik je een "afremmend" effect: `this.speed *= 0.9`.
-- De auto heeft twee Wheels. Als je de `<wheel>` elementen in het `<car>` element plaatst, in plaats van in `<container>`, dan bewegen ze vanzelf mee met de car.
-```
-<body>
-  <container>
-    <car>
-      <wheel></wheel>
-      <wheel></wheel>
-    </car>
-  </container>
-</body>
-```
 
-### Keyboard Input
-```
-constructor(){
-   window.addEventListener("keydown", (e:KeyboardEvent) => this.onKeyDown(e));
-}
-private onKeyDown(event:KeyboardEvent):void {
-   console.log(event.keyCode);
-}       
-```
 
-## Lezen
-- [Game Loop, Collision detection, Keyboard input](https://github.com/HR-CMGT/PRG04-Week3-examples)
-- [Inheritance in Typescript](https://www.typescriptlang.org/docs/handbook/classes.html)
-- [Interface in Typescript](https://www.typescriptlang.org/docs/handbook/interfaces.html)
-- [Typescript Getting Started](https://basarat.gitbooks.io/typescript/content/docs/getting-started.html)
-- [Arrow functions](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
-- [ES6 For In loops](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in)
-- [ES6 For Of loops](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/for...of)
-- [Class Code Naming Conventions](https://dev.to/mohitrajput987/coding-best-practices-part-1-naming-conventions--class-designing-principles)
+## Programmer Principes
+
+
+### Interface
+Dit is toegepast bij de Behaviour Interface. Deze interface bevat functies zoals
+`move()`, `onKeyDown()` en `onKeyUp();`. 
+
+### Static Utility Method
+In `game.ts` zit een public static instance van game. Vervolgens wordt bij het laden
+van de game `let g = new Game();` aangeroepen.
+
+### Singleton 
+Singleton is toegepast in de game door in de game class een functie `getInstance()` te maken.
+Deze kijkt of er een instance van game bestaat, als deze er niet is wordt het aangemaakt. 
+
+### Strategy
+Strategy is in de game verwerkt doordat Cat een behaviour heeft. Standaard heeft Cat een `Idle` Behaviour. 
+Een ring kan twee verschillende Behaviours hebben, namelijk `Float` en `Destroyed`. Idle, Float en Destroyed
+implementeren alle 3 van de `Behaviour Interface`.
+
+### Encapsulation 
+Encapsulation is in het project verwerkt doordat properties en functies `public`, `protected` of `private` zijn.
+
+### Inheritance
+Inheritance is in de game toegepast doordat de classes `Cat`, `greenRing`, en `redRing` allemaal gameObjects zijn. 
+Dit komt doordat alle 3 de classes `gameObject` extenden. Voorbeeld: `Class Cat extends GameObject(){}`
+
+
+### Composition
+Composition is in de game verwerkt doordat de Game een cat en rings bevat. 
+Dit is gedaan door in `Game.ts` instances van Cat en Ring aan te maken. 
+Ook is er gebruik gemaakt van composition in `Cat.ts` als er een nieuwe Behaviour wordt aangemaakt.
+Dit word namelijk gedaan door `this.behaviour = new Idle(this);` aan te roepen. 
+
+
