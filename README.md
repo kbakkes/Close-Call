@@ -67,3 +67,9 @@ Ook is er gebruik gemaakt van composition in `Cat.ts` als er een nieuwe Behaviou
 Dit word namelijk gedaan door `this.behaviour = new Idle(this);` aan te roepen. 
 
 
+### Peer-feedback van Kanten
+
+De Singleton was niet goed toegepast game.ts.
+De constructor was niet private en game werd niet aangeroepen met getInstance() maar direct met new Game();
+Het project voldoet aan de criteria en ik geef het project een voldoende.
+
