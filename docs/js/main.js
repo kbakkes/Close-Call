@@ -123,9 +123,9 @@ var Game = (function () {
     function Game() {
         var _this = this;
         this.rings = new Array();
-        this.score = 0;
         this.cat = new Cat(5, 200);
         this.utils = new Utils();
+        this.score = 0;
         for (var i = 0; i < 12; i += 1) {
             var x = Math.floor(Math.random() * 900) + 100;
             var y = Math.floor(Math.random() * 900) + 100;
@@ -154,7 +154,7 @@ var Game = (function () {
     return Game;
 }());
 window.addEventListener("load", function () {
-    var g = new Game();
+    var g = Game.getInstance();
 });
 var Idle = (function () {
     function Idle(c) {
