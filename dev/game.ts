@@ -11,7 +11,7 @@ class Game {
     
     private score: number;
 
-    constructor() {
+    private constructor() {
         this.cat = new Cat(5,200);
         this.utils = new Utils();
         this.score = 0;
