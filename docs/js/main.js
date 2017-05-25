@@ -40,6 +40,10 @@ var Cat = (function (_super) {
     __extends(Cat, _super);
     function Cat(x, y) {
         var _this = _super.call(this) || this;
+        _this.upKeyPressed = false;
+        _this.downKeyPressed = false;
+        _this.leftKeyPressed = false;
+        _this.rightKeyPressed = false;
         _this.leftSpeed = 0;
         _this.rightSpeed = 0;
         _this.downSpeed = 0;
@@ -52,7 +56,7 @@ var Cat = (function (_super) {
         _this.downKey = 83;
         _this.leftKey = 65;
         _this.rightKey = 68;
-        _this.behaviour = new Idle(_this);
+        _this.behaviour = new Moving(_this);
         _this.x = 100;
         _this.y = 220;
         return _this;
@@ -92,7 +96,7 @@ var Float = (function () {
 var Utils = (function () {
     function Utils() {
     }
-    Utils.prototype.checkColission = function (obj1, obj2) {
+    Utils.checkColission = function (obj1, obj2) {
         if (obj1.getX() < obj2.getX() + obj2.getWidth() &&
             obj1.getX() + obj1.getWidth() > obj2.getX() &&
             obj1.getY() < obj2.getY() + obj2.getHeight() &&
@@ -125,7 +129,8 @@ var Game = (function () {
         this.rings = new Array();
         this.score = 0;
         this.cat = new Cat(5, 200);
-        this.utils = new Utils();
+        window.addEventListener("keydown", function (event) { return _this.cat.behaviour.onKeyDown(event); });
+        window.addEventListener("keyup", function (event) { return _this.cat.behaviour.onKeyUp(event); });
         for (var i = 0; i < 12; i += 1) {
             var x = Math.floor(Math.random() * 900) + 100;
             var y = Math.floor(Math.random() * 900) + 100;
@@ -143,7 +148,7 @@ var Game = (function () {
         var _this = this;
         this.cat.move();
         for (var i = 0; i < 12; i++) {
-            this.utils.checkColission(this.cat, this.rings[i]);
+            Utils.checkColission(this.cat, this.rings[i]);
             this.rings[i].move();
         }
         requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -158,20 +163,39 @@ window.addEventListener("load", function () {
 });
 var Idle = (function () {
     function Idle(c) {
-        var _this = this;
         this.cat = c;
-        window.addEventListener("keydown", function (event) { return _this.onKeyDown(event); });
-        window.addEventListener("keyup", function (e) { return _this.onKeyUp(event); });
     }
     Idle.prototype.update = function () {
     };
     Idle.prototype.onKeyDown = function (event) {
+    };
+    Idle.prototype.onKeyUp = function (event) {
+    };
+    Idle.prototype.move = function () {
+        this.cat.upSpeed = this.cat.downSpeed = this.cat.leftSpeed = this.cat.rightSpeed = 0;
+    };
+    return Idle;
+}());
+var Moving = (function () {
+    function Moving(c) {
+        this.cat = c;
+    }
+    Moving.prototype.update = function () {
+    };
+    Moving.prototype.move = function () {
+        this.cat.x = this.cat.x - this.cat.leftSpeed + this.cat.rightSpeed;
+        this.cat.y = this.cat.y - this.cat.upSpeed + this.cat.downSpeed;
+        this.cat.div.style.transform = "translate(" + this.cat.x + "px, " + this.cat.y + "px)";
+    };
+    Moving.prototype.onKeyUp = function (event) {
+        this.cat.upSpeed = this.cat.downSpeed = this.cat.leftSpeed = this.cat.rightSpeed = 0;
+    };
+    Moving.prototype.onKeyDown = function (event) {
         var x = event.which || event.keyCode;
         console.log(x);
         switch (x) {
             case this.cat.upKey:
                 this.cat.upSpeed = 5;
-                console.log("W");
                 this.cat.y -= this.cat.upSpeed;
                 break;
             case this.cat.downKey:
@@ -192,27 +216,6 @@ var Idle = (function () {
                 this.cat.div.style.backgroundImage = "url('images/cat.png')";
                 break;
         }
-    };
-    Idle.prototype.onKeyUp = function (event) {
-        this.cat.upSpeed = this.cat.downSpeed = this.cat.leftSpeed = this.cat.rightSpeed = 0;
-    };
-    Idle.prototype.move = function () {
-        this.cat.x = this.cat.x - this.cat.leftSpeed + this.cat.rightSpeed;
-        this.cat.y = this.cat.y - this.cat.upSpeed + this.cat.downSpeed;
-        this.cat.div.style.transform = "translate(" + this.cat.x + "px, " + this.cat.y + "px)";
-    };
-    return Idle;
-}());
-var Moving = (function () {
-    function Moving(c) {
-    }
-    Moving.prototype.update = function () {
-    };
-    Moving.prototype.onKeyDown = function () {
-    };
-    Moving.prototype.onKeyUp = function () {
-    };
-    Moving.prototype.move = function () {
     };
     return Moving;
 }());

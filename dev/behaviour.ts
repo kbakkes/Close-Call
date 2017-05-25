@@ -4,9 +4,4 @@ interface Behaviour {
     update():void;
     move():void;
     onKeyUp(event:KeyboardEvent):void;
-    
-    
-     
-    
-
 }

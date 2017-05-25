@@ -17,6 +17,11 @@ class Cat extends GameObject {
     public leftKey : number;
     public rightKey : number;
 
+    public upKeyPressed : boolean = false;
+    public downKeyPressed : boolean = false;
+    public leftKeyPressed : boolean = false;
+    public rightKeyPressed : boolean = false;
+
     public leftSpeed : number = 0;
     public rightSpeed : number = 0;
     public downSpeed : number = 0;
@@ -41,7 +46,8 @@ class Cat extends GameObject {
         this.leftKey = 65;
         this.rightKey = 68;
        
-       this.behaviour = new Idle(this);
+       // Deze behaviour staat nu op moving, maar als je de switch tussen idle en moving hebt gemaakt dan zal deze behaviour op idle moeten beginnen.
+       this.behaviour = new Moving(this);
 
 
         // startpositie

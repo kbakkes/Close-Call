@@ -6,7 +6,6 @@ class Game {
 
     private cat : Cat;
     private rings: Array<Ring> = new Array<Ring>();
-    private utils:Utils;
 
     public static instance:Game;
     
@@ -14,7 +13,10 @@ class Game {
 x
     constructor() {
         this.cat = new Cat(5,200);
-        this.utils = new Utils();
+
+        // Keyboard event listeners nu hier neergezet zodat ze maar 1 keer worden aangemaakt.
+        window.addEventListener("keydown", (event:KeyboardEvent) => this.cat.behaviour.onKeyDown(event));
+        window.addEventListener("keyup", (event:KeyboardEvent) => this.cat.behaviour.onKeyUp(event));
         
         // maakt meerdere ringen aan en zet deze in de array. 
         for (let i=0; i<12; i+=1) {
@@ -38,7 +40,7 @@ x
         this.cat.move();
 
         for(let i=0; i<12; i++){
-            this.utils.checkColission(this.cat,this.rings[i]);
+            Utils.checkColission(this.cat,this.rings[i]);
             this.rings[i].move();
         }
         requestAnimationFrame(() => this.gameLoop());
