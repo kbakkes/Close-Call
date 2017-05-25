@@ -91,3 +91,5 @@ Er is gebruik gemaakt van inheritance.
 
 ### Composition
 Er is gebruik gemaakt van composition.
+
+### Voldoende
