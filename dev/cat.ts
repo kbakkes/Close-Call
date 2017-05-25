@@ -17,10 +17,8 @@ class Cat extends GameObject {
     public leftKey : number;
     public rightKey : number;
 
-    public upKeyPressed : boolean = false;
-    public downKeyPressed : boolean = false;
-    public leftKeyPressed : boolean = false;
-    public rightKeyPressed : boolean = false;
+    // Nieuwe variabele om de cat mee te laten draaien met de movement. Zie de move() functie van de cat.
+    public facingLeft : boolean = false;
 
     public leftSpeed : number = 0;
     public rightSpeed : number = 0;
@@ -67,12 +65,16 @@ class Cat extends GameObject {
 
         this.behaviour.move();
         
-        
-   
-        
-    
-        // maakt de kat aan
-        this.div.style.transform ="translate("+this.x +"px,"+this.y+"px)";
+
+        // Ik maak hier nu gebruik van de facingLeft variabele om de cat om te draaien met scaleX().
+        // Dit is een manier om een plaatje om te draaien zonder dat je een gespiegeld nieuw plaatje hoeft in de laden.
+        // Scheelt dus in performance en zorgt er voor dat je cat niet gaan "flikkeren" tijdens het omdraaien.
+        if(this.facingLeft == true){
+            this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(-1)";
+        }
+        else{
+            this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(1)";
+        }
     } 
 
 

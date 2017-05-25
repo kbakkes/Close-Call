@@ -40,10 +40,7 @@ var Cat = (function (_super) {
     __extends(Cat, _super);
     function Cat(x, y) {
         var _this = _super.call(this) || this;
-        _this.upKeyPressed = false;
-        _this.downKeyPressed = false;
-        _this.leftKeyPressed = false;
-        _this.rightKeyPressed = false;
+        _this.facingLeft = false;
         _this.leftSpeed = 0;
         _this.rightSpeed = 0;
         _this.downSpeed = 0;
@@ -63,7 +60,12 @@ var Cat = (function (_super) {
     }
     Cat.prototype.move = function () {
         this.behaviour.move();
-        this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+        if (this.facingLeft == true) {
+            this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(-1)";
+        }
+        else {
+            this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(1)";
+        }
     };
     return Cat;
 }(GameObject));
@@ -185,7 +187,6 @@ var Moving = (function () {
     Moving.prototype.move = function () {
         this.cat.x = this.cat.x - this.cat.leftSpeed + this.cat.rightSpeed;
         this.cat.y = this.cat.y - this.cat.upSpeed + this.cat.downSpeed;
-        this.cat.div.style.transform = "translate(" + this.cat.x + "px, " + this.cat.y + "px)";
     };
     Moving.prototype.onKeyUp = function (event) {
         this.cat.upSpeed = this.cat.downSpeed = this.cat.leftSpeed = this.cat.rightSpeed = 0;
@@ -207,13 +208,13 @@ var Moving = (function () {
                 this.cat.leftSpeed = 5;
                 console.log("A");
                 this.cat.x -= this.cat.leftSpeed;
-                this.cat.div.style.backgroundImage = "url('images/catRight.png')";
+                this.cat.facingLeft = true;
                 break;
             case this.cat.rightKey:
                 this.cat.rightSpeed = 5;
                 console.log("D");
                 this.cat.x += 10;
-                this.cat.div.style.backgroundImage = "url('images/cat.png')";
+                this.cat.facingLeft = false;
                 break;
         }
     };

@@ -14,7 +14,6 @@ class Moving implements Behaviour{
         move():void{ 
                 this.cat.x = this.cat.x - this.cat.leftSpeed + this.cat.rightSpeed;
                 this.cat.y = this.cat.y - this.cat.upSpeed + this.cat.downSpeed;
-                this.cat.div.style.transform = "translate("+this.cat.x+"px, "+this.cat.y+"px)";
         }
 
         onKeyUp(event){
@@ -52,14 +51,16 @@ class Moving implements Behaviour{
             this.cat.leftSpeed = 5;
             console.log("A");
             this.cat.x -= this.cat.leftSpeed;
-            this.cat.div.style.backgroundImage = "url('images/catRight.png')";   // de kat draait de juiste richting
+            // facingLeft laten veranderen zodat de cat weet dat hij moet omdraaien.
+            this.cat.facingLeft = true;
             break;
 
             case this.cat.rightKey:
             this.cat.rightSpeed = 5;
             console.log("D");
             this.cat.x += 10;
-            this.cat.div.style.backgroundImage = "url('images/cat.png')";   // de kat draait de juiste richting
+            // facingLeft laten veranderen zodat de cat weet dat hij moet omdraaien.
+            this.cat.facingLeft = false;
             break;
         }
         }
