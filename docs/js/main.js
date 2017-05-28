@@ -1,13 +1,8 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var GameObject = (function () {
     function GameObject() {
         this.x = 0;
@@ -39,26 +34,52 @@ var GameObject = (function () {
 var Cat = (function (_super) {
     __extends(Cat, _super);
     function Cat(x, y) {
-        var _this = _super.call(this) || this;
-        _this.leftSpeed = 0;
-        _this.rightSpeed = 0;
-        _this.downSpeed = 0;
-        _this.upSpeed = 0;
-        _super.prototype.createDiv.call(_this, "cat");
-        _this.speed = 4;
-        _this.width = 146;
-        _this.height = 128;
-        _this.upKey = 87;
-        _this.downKey = 83;
-        _this.leftKey = 65;
-        _this.rightKey = 68;
-        _this.behaviour = new Idle(_this);
-        _this.x = 100;
-        _this.y = 220;
-        return _this;
+        var _this = this;
+        _super.call(this);
+        this.leftSpeed = 0;
+        this.rightSpeed = 0;
+        this.downSpeed = 0;
+        this.upSpeed = 0;
+        _super.prototype.createDiv.call(this, "cat");
+        this.speed = 4;
+        this.width = 146;
+        this.height = 128;
+        this.upKey = 87;
+        this.downKey = 83;
+        this.leftKey = 65;
+        this.rightKey = 68;
+        this.behaviour = new Moving(this);
+        this.x = 100;
+        this.y = 220;
+        window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
     }
+    Cat.prototype.onKeyDown = function (event) {
+        switch (event.keyCode) {
+            case this.upKey:
+                this.upSpeed = 5;
+                console.log("W");
+                this.y -= this.upSpeed;
+                break;
+            case this.downKey:
+                this.downSpeed = 5;
+                console.log("S");
+                this.y += this.downSpeed;
+                break;
+            case this.leftKey:
+                this.speed = 5;
+                console.log("A");
+                this.x -= this.speed;
+                this.div.style.backgroundImage = "url('images/catRight.png')";
+                break;
+            case this.rightKey:
+                this.rightSpeed = 5;
+                console.log("D");
+                this.x += this.rightSpeed;
+                this.div.style.backgroundImage = "url('images/cat.png')";
+                break;
+        }
+    };
     Cat.prototype.move = function () {
-        this.behaviour.move();
         this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
     };
     return Cat;
@@ -67,10 +88,6 @@ var Destroyed = (function () {
     function Destroyed() {
     }
     Destroyed.prototype.update = function () {
-    };
-    Destroyed.prototype.onKeyDown = function () {
-    };
-    Destroyed.prototype.onKeyUp = function () {
     };
     Destroyed.prototype.move = function () {
     };
@@ -106,13 +123,12 @@ var Utils = (function () {
 var Ring = (function (_super) {
     __extends(Ring, _super);
     function Ring(x, y) {
-        var _this = _super.call(this) || this;
-        _this.x = x;
-        _this.y = y;
-        _this.width = 50;
-        _this.height = 50;
-        _super.prototype.createDiv.call(_this, "ring");
-        return _this;
+        _super.call(this);
+        this.x = x;
+        this.y = y;
+        this.width = 50;
+        this.height = 50;
+        _super.prototype.createDiv.call(this, "ring");
     }
     Ring.prototype.move = function () {
         this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
@@ -123,6 +139,7 @@ var Game = (function () {
     function Game() {
         var _this = this;
         this.rings = new Array();
+        this.lives = 3;
         this.score = 0;
         this.cat = new Cat(5, 200);
         this.utils = new Utils();
@@ -143,7 +160,10 @@ var Game = (function () {
         var _this = this;
         this.cat.move();
         for (var i = 0; i < 12; i++) {
-            this.utils.checkColission(this.cat, this.rings[i]);
+            if (this.utils.checkColission(this.cat, this.rings[i])) {
+                this.lives -= 1;
+                console.log("leven -1, Aantal levens: " + this.lives);
+            }
             this.rings[i].move();
         }
         requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -154,65 +174,29 @@ var Game = (function () {
     return Game;
 }());
 window.addEventListener("load", function () {
-    var g = new Game();
+    var g = Game.getInstance();
 });
 var Idle = (function () {
     function Idle(c) {
-        var _this = this;
-        this.cat = c;
-        window.addEventListener("keydown", function (event) { return _this.onKeyDown(event); });
-        window.addEventListener("keyup", function (e) { return _this.onKeyUp(event); });
     }
     Idle.prototype.update = function () {
     };
-    Idle.prototype.onKeyDown = function (event) {
-        var x = event.which || event.keyCode;
-        console.log(x);
-        switch (x) {
-            case this.cat.upKey:
-                this.cat.upSpeed = 5;
-                console.log("W");
-                this.cat.y -= this.cat.upSpeed;
-                break;
-            case this.cat.downKey:
-                this.cat.downSpeed = 5;
-                console.log("S");
-                this.cat.y += this.cat.downSpeed;
-                break;
-            case this.cat.leftKey:
-                this.cat.leftSpeed = 5;
-                console.log("A");
-                this.cat.x -= this.cat.leftSpeed;
-                this.cat.div.style.backgroundImage = "url('images/catRight.png')";
-                break;
-            case this.cat.rightKey:
-                this.cat.rightSpeed = 5;
-                console.log("D");
-                this.cat.x += 10;
-                this.cat.div.style.backgroundImage = "url('images/cat.png')";
-                break;
-        }
-    };
-    Idle.prototype.onKeyUp = function (event) {
-        this.cat.upSpeed = this.cat.downSpeed = this.cat.leftSpeed = this.cat.rightSpeed = 0;
-    };
     Idle.prototype.move = function () {
-        this.cat.x = this.cat.x - this.cat.leftSpeed + this.cat.rightSpeed;
-        this.cat.y = this.cat.y - this.cat.upSpeed + this.cat.downSpeed;
-        this.cat.div.style.transform = "translate(" + this.cat.x + "px, " + this.cat.y + "px)";
     };
     return Idle;
 }());
 var Moving = (function () {
     function Moving(c) {
+        this.cat = c;
     }
     Moving.prototype.update = function () {
-    };
-    Moving.prototype.onKeyDown = function () {
-    };
-    Moving.prototype.onKeyUp = function () {
+        this.cat.move();
     };
     Moving.prototype.move = function () {
+        this.cat.x += this.cat.leftSpeed;
+        this.cat.x = this.cat.x - this.cat.leftSpeed + this.cat.rightSpeed;
+        this.cat.y = this.cat.y - this.cat.upSpeed + this.cat.downSpeed;
+        this.cat.div.style.transform = "translate(" + this.cat.x + "px, " + this.cat.y + "px)";
     };
     return Moving;
 }());

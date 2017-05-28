@@ -8,6 +8,8 @@ class Game {
     private rings: Array<Ring> = new Array<Ring>();
     private utils:Utils;
 
+    public lives:number = 3;
+
     public static instance:Game;
     
     private score: number = 0;
@@ -38,7 +40,11 @@ x
         this.cat.move();
 
         for(let i=0; i<12; i++){
-            this.utils.checkColission(this.cat,this.rings[i]);
+            if(this.utils.checkColission(this.cat,this.rings[i])){
+                this.lives -= 1;
+                console.log("leven -1, Aantal levens: "+this.lives)
+            }
+            
             this.rings[i].move();
         }
         requestAnimationFrame(() => this.gameLoop());
@@ -56,5 +62,5 @@ x
 
 // load
 window.addEventListener("load", function() {
-   let g = new Game();
+   let g = Game.getInstance();
 });

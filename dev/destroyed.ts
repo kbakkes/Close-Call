@@ -14,16 +14,6 @@ class Destroyed implements Behaviour{
 
         }
 
-
-        onKeyDown(){
-
-        }
-
-
-        onKeyUp(){
-            
-        }
-
         move():void{ 
          
 
