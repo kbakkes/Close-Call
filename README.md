@@ -67,3 +67,37 @@ Ook is er gebruik gemaakt van composition in `Cat.ts` als er een nieuwe Behaviou
 Dit word namelijk gedaan door `this.behaviour = new Idle(this);` aan te roepen. 
 
 
+### Beoordeling:		
+ 		
+ ### Strategy:		
+ De idle werd gebruikt als move functie, Het behaviour moet natuurlijk moving zijn als de speler de kat wilt bewegen.		
+ 		
+ ### Singleton:		
+ Je had wel een gameinstance gemaakt, maar die niet meegegeven aan de window.addeventlistener.		
+ 		
+ ### Encapsulation:		
+ Goed gebruik gemaakt van public,protected en private.		
+ 		
+ ### Inheritance:		
+ Je hebt een gameobject gemaakt en zo wordt je code verkort en gebruik het dus minder geheugen.		
+ 		
+ ### Composition:		
+ Je geeft de kat mee in het de behaviour interface, hierdoor kunnen de behaviour instances gebruik maken van de kat.		
+ 		
+ ### Interface:		
+ De interface gebruik je voor de behaviours, dus dat heb je goed toegepast. Ook gebruiken alle behaviours de functies in de interface en is de interface leeg.		
+ 	
+ ### Static Utility Method:		
+ Static gebruik je voor de game, zo kan je gemakkelijk de game aanroepen in andere ts bestanden en zo in de toekomst ook je endgame() functie aanroepen in bijvoorbeeld moving.ts		
+ 	
+ ### Aanpassingen:		
+ - Behaviour class, onkeydown en up verwijderd en de moving class zorgt nu voor de movement.		
+ - Basic levens toegevoegd, als de kat een collision heeft met een ring gaat er een leven vanaf. (in de console zelf nog toepassen in de game zelf levens tonen).		
+ - In game.ts game instance aangemaakt.		
+ 		
+ Om de game wat leuker te maken, kan je de ringen laten bewegen in verschillende snelheden en ook laten weerkaatsen op de zijkant van de window.		
+ 		
+ ### Beoordeling:		
+ Bij singleton, de game instance vergeten en met behaviour had je het niet logisch opgebouwd, als je behaviour idle was ging je kat bewegen.		
+ Voldoende		
+ 
