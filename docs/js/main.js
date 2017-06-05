@@ -212,6 +212,7 @@ var Game = (function () {
             Utils.makeRedRings(this.redRings, 12);
             for (var i = 0; i < this.greenRings.length; i++) {
                 Utils.removeFromGame(this.greenRings[i], this.greenRings);
+                this.score += 1;
             }
             Utils.makeGreenRings(this.greenRings, 4);
         }
