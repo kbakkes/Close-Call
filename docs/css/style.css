@@ -28,26 +28,26 @@ score {
     font-size : 22px;
     padding:20px;
     top:2%;
+    text-shadow: 3px 0 red, 0 1px red, 1px 0 red, 0 3px red;
 }
 
 lifes { 
     color:white;
     font-size : 22px;
     padding:20px;
-    top:2%;
-    right:3%;
+    top:2.5%;
+    right:2%;
+    text-shadow: 3px 0 red, 0 1px red, 1px 0 red, 0 3px red;
 }
 
 title{
-    color:red;
+    color:white;
+    text-shadow: 3px 0 red, 0 1px red, 1px 0 red, 0 3px red;
     font-size: 30px;
     padding:20px;
-    animation-name: floating;
-    animation-duration: 3s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    margin-left: 27%;
-    margin-top: 1%;
+    margin-left: 25%;
+    margin-top: 2%;
+    
 }
 
 cat {
@@ -70,6 +70,23 @@ redRing{
      background-image: url(../images/redRing.png);
      width:50px; height: 50px; 
 }
+
+gameOver{
+    z-index: 9;
+    font-size: 60px;
+    margin-left: 25%;
+    margin-top: 40%;
+    color: white;
+     animation-name: floating;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+
+
+}
+
+
+
 @keyframes floating {
     from { transform: translate(0,  0px); }
     65%  { transform: translate(0, 15px); }

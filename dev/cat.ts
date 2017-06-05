@@ -5,7 +5,6 @@ class Cat extends GameObject {
 
     public behaviour:Behaviour; 
     public speed:number;
-    public lifes:number;
 
     public x: number;
     public y: number;
@@ -76,6 +75,9 @@ class Cat extends GameObject {
             this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(1)";
         }
     } 
+
+
+   
 
 
 

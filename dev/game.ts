@@ -12,6 +12,7 @@ class Game {
     public static instance:Game;
 
     private score: number = 0;
+    private lifes: number = 3;
     
 
     constructor() {
@@ -39,22 +40,41 @@ class Game {
 
     private gameLoop(){
         this.cat.move();
+        let dead = false; 
 
         for(let i=0; i<this.greenRings.length; i++){
             this.greenRings[i].move();
             if(Utils.checkColission(this.cat,this.greenRings[i])){
                 Utils.removeFromGame(this.greenRings[i],this.greenRings);
-            }
-            
+
+                this.lifes-= 1;
+                let lifesDiv = document.getElementById("lifes");
+                lifesDiv.innerHTML = "Lifes: " + this.lifes;
+            } 
         }
+
+
+        // makes redrings, if colission is detected then score adds up by 1
         for(let i=0; i<this.redRings.length; i++){
             this.redRings[i].move();
             if(Utils.checkColission(this.cat,this.redRings[i])){
-            Utils.removeFromGame(this.redRings[i],this.redRings);  
+            Utils.removeFromGame(this.redRings[i],this.redRings);
+            
+            this.score ++
+            let scoreDiv = document.getElementById("score");
+            scoreDiv.innerHTML = "Score: " + this.score;
             }
         }
+
+        if(this.lifes <= 0){
+            dead = true;
+            Utils.gameOver();
+        }
+
+
+
         
-        requestAnimationFrame(() => this.gameLoop());
+        if(!dead) requestAnimationFrame(() => this.gameLoop());
         
     }
 

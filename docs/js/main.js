@@ -128,6 +128,10 @@ var Utils = (function () {
             arr.splice(i, 1);
         }
     };
+    Utils.gameOver = function () {
+        var endDiv = document.getElementById("gameover");
+        endDiv.innerHTML = "Game Over<br>Score: 0";
+    };
     return Utils;
 }());
 var greenRing = (function (_super) {
@@ -168,6 +172,7 @@ var Game = (function () {
         this.greenRings = new Array();
         this.redRings = new Array();
         this.score = 0;
+        this.lifes = 3;
         this.cat = new Cat(5, 200);
         window.addEventListener("keydown", function (event) { return _this.cat.behaviour.onKeyDown(event); });
         window.addEventListener("keyup", function (event) { return _this.cat.behaviour.onKeyUp(event); });
@@ -184,19 +189,31 @@ var Game = (function () {
     Game.prototype.gameLoop = function () {
         var _this = this;
         this.cat.move();
+        var dead = false;
         for (var i = 0; i < this.greenRings.length; i++) {
             this.greenRings[i].move();
             if (Utils.checkColission(this.cat, this.greenRings[i])) {
                 Utils.removeFromGame(this.greenRings[i], this.greenRings);
+                this.lifes -= 1;
+                var lifesDiv = document.getElementById("lifes");
+                lifesDiv.innerHTML = "Lifes: " + this.lifes;
             }
         }
         for (var i = 0; i < this.redRings.length; i++) {
             this.redRings[i].move();
             if (Utils.checkColission(this.cat, this.redRings[i])) {
                 Utils.removeFromGame(this.redRings[i], this.redRings);
+                this.score++;
+                var scoreDiv = document.getElementById("score");
+                scoreDiv.innerHTML = "Score: " + this.score;
             }
         }
-        requestAnimationFrame(function () { return _this.gameLoop(); });
+        if (this.lifes <= 0) {
+            dead = true;
+            Utils.gameOver();
+        }
+        if (!dead)
+            requestAnimationFrame(function () { return _this.gameLoop(); });
     };
     Game.prototype.endGame = function () {
         document.getElementById("score").innerHTML = "Score : 0";
@@ -236,7 +253,6 @@ var Moving = (function () {
     };
     Moving.prototype.onKeyDown = function (event) {
         var x = event.which || event.keyCode;
-        console.log(x);
         switch (x) {
             case this.cat.upKey:
                 this.cat.upSpeed = 5;
@@ -244,18 +260,15 @@ var Moving = (function () {
                 break;
             case this.cat.downKey:
                 this.cat.downSpeed = 5;
-                console.log("S");
                 this.cat.y += this.cat.downSpeed;
                 break;
             case this.cat.leftKey:
                 this.cat.leftSpeed = 5;
-                console.log("A");
                 this.cat.x -= this.cat.leftSpeed;
                 this.cat.facingLeft = true;
                 break;
             case this.cat.rightKey:
                 this.cat.rightSpeed = 5;
-                console.log("D");
                 this.cat.x += 10;
                 this.cat.facingLeft = false;
                 break;

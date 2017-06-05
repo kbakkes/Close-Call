@@ -33,7 +33,7 @@ class Moving implements Behaviour{
                 var x = event.which || event.keyCode;
            
             
-            console.log(x);
+            // console.log(x);
             // Verschillende functies voor als er op WASD wordt ingedrukt. 
              switch (x){
             case this.cat.upKey:
@@ -43,13 +43,13 @@ class Moving implements Behaviour{
             
             case this.cat.downKey:
             this.cat.downSpeed = 5;
-            console.log("S");
+            // console.log("S");
             this.cat.y += this.cat.downSpeed;
             break;
 
             case this.cat.leftKey:
             this.cat.leftSpeed = 5;
-            console.log("A");
+            // console.log("A");
             this.cat.x -= this.cat.leftSpeed;
             // facingLeft laten veranderen zodat de cat weet dat hij moet omdraaien.
             this.cat.facingLeft = true;
@@ -57,7 +57,7 @@ class Moving implements Behaviour{
 
             case this.cat.rightKey:
             this.cat.rightSpeed = 5;
-            console.log("D");
+            // console.log("D");
             this.cat.x += 10;
             // facingLeft laten veranderen zodat de cat weet dat hij moet omdraaien.
             this.cat.facingLeft = false;
