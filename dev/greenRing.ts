@@ -1,6 +1,6 @@
 /// <reference path="gameObject.ts"/>
 
-class Ring extends GameObject{
+class greenRing extends GameObject{
 
     public x: number;
     public y: number;
@@ -17,15 +17,18 @@ class Ring extends GameObject{
             this.width = 50;
             this.height = 50;
 
-        super.createDiv("ring");
+        super.createDiv("greenRing");
 
     }
 
 
     public move():void{
         this.div.style.transform ="translate("+this.x +"px,"+this.y+"px)";
+        
     }
 
+  
+   
 
 
 

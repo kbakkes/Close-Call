@@ -27,6 +27,15 @@ score {
     color:white;
     font-size : 22px;
     padding:20px;
+    top:2%;
+}
+
+lifes { 
+    color:white;
+    font-size : 22px;
+    padding:20px;
+    top:2%;
+    right:3%;
 }
 
 title{
@@ -51,11 +60,15 @@ catRight{
     width:146px; height: 128px;
 }
 
-ring {
-    background-image: url(../images/ring.png);
-    width:50px; height: 50px;    
+greenRing {
+    background-image: url(../images/greenRing.png);
+    width:50px; height: 50px;  
     
-   
+}
+
+redRing{
+     background-image: url(../images/redRing.png);
+     width:50px; height: 50px; 
 }
 @keyframes floating {
     from { transform: translate(0,  0px); }

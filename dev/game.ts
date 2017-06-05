@@ -1,16 +1,19 @@
 /// <reference path="cat.ts"/>
 /// <reference path="utils.ts"/>
-/// <reference path="ring.ts"/>
+/// <reference path="greenRing.ts"/>
+/// <reference path="redRing.ts"/>
 
 class Game {
 
     private cat : Cat;
-    private rings: Array<Ring> = new Array<Ring>();
+    private greenRings: Array<greenRing> = new Array<greenRing>();
+    private redRings: Array<redRing> = new Array<redRing>();
 
     public static instance:Game;
-    
+
     private score: number = 0;
-x
+    
+
     constructor() {
         this.cat = new Cat(5,200);
 
@@ -18,12 +21,10 @@ x
         window.addEventListener("keydown", (event:KeyboardEvent) => this.cat.behaviour.onKeyDown(event));
         window.addEventListener("keyup", (event:KeyboardEvent) => this.cat.behaviour.onKeyUp(event));
         
-        // maakt meerdere ringen aan en zet deze in de array. 
-        for (let i=0; i<12; i+=1) {
-        let x = Math.floor(Math.random() * 900) + 100
-        let y = Math.floor(Math.random() * 900) + 100
-        this.rings.push(new Ring(x,y));
-    }
+        
+       Utils.makeGreenRings(this.greenRings,4);
+       Utils.makeRedRings(this.redRings,12);
+
     
         requestAnimationFrame(() => this.gameLoop());
     }
@@ -39,10 +40,20 @@ x
     private gameLoop(){
         this.cat.move();
 
-        for(let i=0; i<12; i++){
-            Utils.checkColission(this.cat,this.rings[i]);
-            this.rings[i].move();
+        for(let i=0; i<this.greenRings.length; i++){
+            this.greenRings[i].move();
+            if(Utils.checkColission(this.cat,this.greenRings[i])){
+                Utils.removeFromGame(this.greenRings[i],this.greenRings);
+            }
+            
         }
+        for(let i=0; i<this.redRings.length; i++){
+            this.redRings[i].move();
+            if(Utils.checkColission(this.cat,this.redRings[i])){
+            Utils.removeFromGame(this.redRings[i],this.redRings);  
+            }
+        }
+        
         requestAnimationFrame(() => this.gameLoop());
         
     }

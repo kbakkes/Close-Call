@@ -5,7 +5,7 @@ class Cat extends GameObject {
 
     public behaviour:Behaviour; 
     public speed:number;
-    
+    public lifes:number;
 
     public x: number;
     public y: number;

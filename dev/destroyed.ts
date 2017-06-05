@@ -1,6 +1,7 @@
 class Destroyed implements Behaviour{
     cat:Cat
-    ring:Ring
+    greenRing:greenRing
+    redRing:redRing
     
 
 

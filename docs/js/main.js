@@ -107,37 +107,72 @@ var Utils = (function () {
             return true;
         }
     };
+    Utils.makeGreenRings = function (arr, loops) {
+        for (var i = 0; i < loops; i += 1) {
+            var x = Math.floor(Math.random() * 900) + 100;
+            var y = Math.floor(Math.random() * 900) + 100;
+            arr.push(new greenRing(x, y));
+        }
+    };
+    Utils.makeRedRings = function (arr, loops) {
+        for (var i = 0; i < loops; i += 1) {
+            var x = Math.floor(Math.random() * 900) + 100;
+            var y = Math.floor(Math.random() * 900) + 100;
+            arr.push(new redRing(x, y));
+        }
+    };
+    Utils.removeFromGame = function (go, arr) {
+        go.div.remove();
+        var i = arr.indexOf(go);
+        if (i != -1) {
+            arr.splice(i, 1);
+        }
+    };
     return Utils;
 }());
-var Ring = (function (_super) {
-    __extends(Ring, _super);
-    function Ring(x, y) {
+var greenRing = (function (_super) {
+    __extends(greenRing, _super);
+    function greenRing(x, y) {
         var _this = _super.call(this) || this;
         _this.x = x;
         _this.y = y;
         _this.width = 50;
         _this.height = 50;
-        _super.prototype.createDiv.call(_this, "ring");
+        _super.prototype.createDiv.call(_this, "greenRing");
         return _this;
     }
-    Ring.prototype.move = function () {
+    greenRing.prototype.move = function () {
         this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
     };
-    return Ring;
+    return greenRing;
+}(GameObject));
+var redRing = (function (_super) {
+    __extends(redRing, _super);
+    function redRing(x, y) {
+        var _this = _super.call(this) || this;
+        _this.x = x;
+        _this.y = y;
+        _this.width = 20;
+        _this.height = 20;
+        _super.prototype.createDiv.call(_this, "redRing");
+        return _this;
+    }
+    redRing.prototype.move = function () {
+        this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+    };
+    return redRing;
 }(GameObject));
 var Game = (function () {
     function Game() {
         var _this = this;
-        this.rings = new Array();
+        this.greenRings = new Array();
+        this.redRings = new Array();
         this.score = 0;
         this.cat = new Cat(5, 200);
         window.addEventListener("keydown", function (event) { return _this.cat.behaviour.onKeyDown(event); });
         window.addEventListener("keyup", function (event) { return _this.cat.behaviour.onKeyUp(event); });
-        for (var i = 0; i < 12; i += 1) {
-            var x = Math.floor(Math.random() * 900) + 100;
-            var y = Math.floor(Math.random() * 900) + 100;
-            this.rings.push(new Ring(x, y));
-        }
+        Utils.makeGreenRings(this.greenRings, 4);
+        Utils.makeRedRings(this.redRings, 12);
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
     Game.getInstance = function () {
@@ -149,9 +184,17 @@ var Game = (function () {
     Game.prototype.gameLoop = function () {
         var _this = this;
         this.cat.move();
-        for (var i = 0; i < 12; i++) {
-            Utils.checkColission(this.cat, this.rings[i]);
-            this.rings[i].move();
+        for (var i = 0; i < this.greenRings.length; i++) {
+            this.greenRings[i].move();
+            if (Utils.checkColission(this.cat, this.greenRings[i])) {
+                Utils.removeFromGame(this.greenRings[i], this.greenRings);
+            }
+        }
+        for (var i = 0; i < this.redRings.length; i++) {
+            this.redRings[i].move();
+            if (Utils.checkColission(this.cat, this.redRings[i])) {
+                Utils.removeFromGame(this.redRings[i], this.redRings);
+            }
         }
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
