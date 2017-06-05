@@ -66,19 +66,25 @@ class Game {
             }
         }
 
-        if(this.lifes <= 0){
-            dead = true;
-            Utils.gameOver();
+        if(this.redRings.length == 0){
+            Utils.makeRedRings(this.redRings,12);
+            for(let i = 0; i<this.greenRings.length; i++){
+                Utils.removeFromGame(this.greenRings[i], this.greenRings);
+            }
+            Utils.makeGreenRings(this.greenRings,4);
         }
 
 
 
+
+        if(this.lifes <= 0){
+            dead = true;
+            Utils.gameOver();
+        }
         
         if(!dead) requestAnimationFrame(() => this.gameLoop());
         
     }
-
-
 
     public endGame(){
         document.getElementById("score").innerHTML = "Score : 0";

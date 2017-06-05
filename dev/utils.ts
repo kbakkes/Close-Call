@@ -53,8 +53,10 @@ public static gameOver(){
     let endDiv = document.getElementById("gameover");
     endDiv.innerHTML = "Game Over<br>Score: 0";
 
-
 }
+
+
+
   
 
 
