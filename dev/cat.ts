@@ -38,10 +38,10 @@ class Cat extends GameObject {
         
       
         // Keyboard Unicodes
-        this.upKey = 87;
-        this.downKey = 83;
-        this.leftKey = 65;
-        this.rightKey = 68;
+        this.upKey = Keys.UP;
+        this.downKey = Keys.DOWN;
+        this.leftKey = Keys.LEFT;
+        this.rightKey = Keys.RIGHT;
        
        // Deze behaviour staat nu op moving, maar als je de switch tussen idle en moving hebt gemaakt dan zal deze behaviour op idle moeten beginnen.
        this.behaviour = new Moving(this);

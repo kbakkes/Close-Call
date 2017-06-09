@@ -80,7 +80,8 @@ class Game {
 
         if(this.lifes <= 0){
             dead = true;
-            Utils.gameOver();
+             let endDiv = document.getElementById("gameover");
+             endDiv.innerHTML = "Game Over<br>Score: "+ this.score;
         }
         
         if(!dead) requestAnimationFrame(() => this.gameLoop());

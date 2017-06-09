@@ -14,8 +14,8 @@ class greenRing extends GameObject{
         this.y = y;
 
             // image afmetingen
-            this.width = 50;
-            this.height = 50;
+            this.width = 20;
+            this.height = 20;
 
         super.createDiv("greenRing");
 

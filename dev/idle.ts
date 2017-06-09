@@ -15,8 +15,8 @@ class Idle implements Behaviour{
         onKeyDown(event){
             // In deze functie zou je iets kunnen maken om de behaviour van de cat aan te passen als er een toets ingedrukt wordt.
 
-            // this.cat.behaviour = new Moving(this.cat);
-            // console.log("behaviour verandert naar moving");
+            this.cat.behaviour = new Moving(this.cat);
+            console.log("behaviour verandert naar moving");
         }
 
  

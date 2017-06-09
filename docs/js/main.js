@@ -49,10 +49,10 @@ var Cat = (function (_super) {
         _this.speed = 4;
         _this.width = 146;
         _this.height = 128;
-        _this.upKey = 87;
-        _this.downKey = 83;
-        _this.leftKey = 65;
-        _this.rightKey = 68;
+        _this.upKey = Keys.UP;
+        _this.downKey = Keys.DOWN;
+        _this.leftKey = Keys.LEFT;
+        _this.rightKey = Keys.RIGHT;
         _this.behaviour = new Moving(_this);
         _this.x = 100;
         _this.y = 220;
@@ -140,8 +140,8 @@ var greenRing = (function (_super) {
         var _this = _super.call(this) || this;
         _this.x = x;
         _this.y = y;
-        _this.width = 50;
-        _this.height = 50;
+        _this.width = 20;
+        _this.height = 20;
         _super.prototype.createDiv.call(_this, "greenRing");
         return _this;
     }
@@ -218,7 +218,8 @@ var Game = (function () {
         }
         if (this.lifes <= 0) {
             dead = true;
-            Utils.gameOver();
+            var endDiv = document.getElementById("gameover");
+            endDiv.innerHTML = "Game Over<br>Score: " + this.score;
         }
         if (!dead)
             requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -238,6 +239,8 @@ var Idle = (function () {
     Idle.prototype.update = function () {
     };
     Idle.prototype.onKeyDown = function (event) {
+        this.cat.behaviour = new Moving(this.cat);
+        console.log("behaviour verandert naar moving");
     };
     Idle.prototype.onKeyUp = function (event) {
     };
@@ -246,6 +249,13 @@ var Idle = (function () {
     };
     return Idle;
 }());
+var Keys;
+(function (Keys) {
+    Keys[Keys["UP"] = 87] = "UP";
+    Keys[Keys["DOWN"] = 83] = "DOWN";
+    Keys[Keys["LEFT"] = 65] = "LEFT";
+    Keys[Keys["RIGHT"] = 68] = "RIGHT";
+})(Keys || (Keys = {}));
 var Moving = (function () {
     function Moving(c) {
         this.cat = c;
