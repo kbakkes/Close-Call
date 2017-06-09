@@ -77,32 +77,6 @@ var Cat = (function (_super) {
     };
     return Cat;
 }(GameObject));
-var Destroyed = (function () {
-    function Destroyed() {
-    }
-    Destroyed.prototype.update = function () {
-    };
-    Destroyed.prototype.onKeyDown = function () {
-    };
-    Destroyed.prototype.onKeyUp = function () {
-    };
-    Destroyed.prototype.move = function () {
-    };
-    return Destroyed;
-}());
-var Float = (function () {
-    function Float(c) {
-    }
-    Float.prototype.update = function () {
-    };
-    Float.prototype.onKeyDown = function () {
-    };
-    Float.prototype.onKeyUp = function () {
-    };
-    Float.prototype.move = function () {
-    };
-    return Float;
-}());
 var Utils = (function () {
     function Utils() {
     }
