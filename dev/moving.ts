@@ -5,6 +5,7 @@ class Moving implements Behaviour{
 
     constructor(c:Cat){
         this.cat= c;
+        
     }
 
 

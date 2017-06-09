@@ -1,15 +1,15 @@
 /// <reference path="gameObject.ts"/>
-
-class redRing extends GameObject{
+namespace Ring{
+    export class redRing extends GameObject implements Observer{
 
     public x: number;
     public y: number;
     public width:number;
     public height:number;
 
-    constructor(x:number,y:number){  
+    constructor(x:number,y:number,s:Subject){  
         super();
-
+        s.subscribe(this);
         this.x = x;
         this.y = y;
 
@@ -26,10 +26,12 @@ class redRing extends GameObject{
         this.div.style.transform ="translate("+this.x +"px,"+this.y+"px)";
     }
 
+    public notify(){ 
+     console.log("De kat beweegt ik moet wel opgepakt worden");
+    }
 
 
 
-
-
+}
 
 }

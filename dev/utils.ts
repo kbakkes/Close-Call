@@ -1,4 +1,5 @@
 /// <reference path="game.ts"/>
+/// <reference path="cat.ts"/>
 
 class Utils{
 
@@ -16,11 +17,11 @@ class Utils{
     /**
      * maakt een ring instance op een random plek aan en zet deze in de array
      */
-        public static makeGreenRings( arr:Array<any>, loops:number){
+        public static makeGreenRings( arr:Array<any>, loops:number,s:Subject){
               for (let i=0; i<loops; i+=1) {
             let x = Math.floor(Math.random() * 900) + 100
             let y = Math.floor(Math.random() * 900) + 100
-            arr.push(new greenRing(x,y));
+            arr.push(new Ring.greenRing(x,y,s));
     }
         }
 
@@ -28,11 +29,11 @@ class Utils{
    /**
      * maakt een ring instance op een random plek aan en zet deze in de array
      */
-        public static makeRedRings( arr:Array<any>, loops:number){
+        public static makeRedRings( arr:Array<any>, loops:number, s:Subject){
               for (let i=0; i<loops; i+=1) {
             let x = Math.floor(Math.random() * 900) + 100
             let y = Math.floor(Math.random() * 900) + 100
-            arr.push(new redRing(x,y));
+            arr.push(new Ring.redRing(x,y,s));
     }
         }
 

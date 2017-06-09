@@ -1,8 +1,8 @@
 /// <reference path="gameObject.ts"/>
 
-class Cat extends GameObject {
+class Cat extends GameObject implements Subject {
 
-
+    public observers:Array<Observer> = new Array<Observer>();
     public behaviour:Behaviour; 
     public speed:number;
 
@@ -44,18 +44,14 @@ class Cat extends GameObject {
         this.rightKey = Keys.RIGHT;
        
        // Deze behaviour staat nu op moving, maar als je de switch tussen idle en moving hebt gemaakt dan zal deze behaviour op idle moeten beginnen.
-       this.behaviour = new Moving(this);
+       this.behaviour = new Idle(this,this.observers);
+       
 
 
         // startpositie
          this.x = 100;
          this.y = 220;
        
-        
-   
-  
-        
-   
 
        
     }
@@ -63,6 +59,7 @@ class Cat extends GameObject {
     public move():void {
 
         this.behaviour.move();
+        
         
 
         // Ik maak hier nu gebruik van de facingLeft variabele om de cat om te draaien met scaleX().
@@ -75,6 +72,13 @@ class Cat extends GameObject {
             this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(1)";
         }
     } 
+
+        public subscribe(o:Observer):void {
+            this.observers.push(o);
+  }
+        public unsubscribe(o:Observer):void {
+        
+  }
 
 
    

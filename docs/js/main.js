@@ -40,6 +40,7 @@ var Cat = (function (_super) {
     __extends(Cat, _super);
     function Cat(x, y) {
         var _this = _super.call(this) || this;
+        _this.observers = new Array();
         _this.facingLeft = false;
         _this.leftSpeed = 0;
         _this.rightSpeed = 0;
@@ -53,7 +54,7 @@ var Cat = (function (_super) {
         _this.downKey = Keys.DOWN;
         _this.leftKey = Keys.LEFT;
         _this.rightKey = Keys.RIGHT;
-        _this.behaviour = new Moving(_this);
+        _this.behaviour = new Idle(_this, _this.observers);
         _this.x = 100;
         _this.y = 220;
         return _this;
@@ -66,6 +67,11 @@ var Cat = (function (_super) {
         else {
             this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(1)";
         }
+    };
+    Cat.prototype.subscribe = function (o) {
+        this.observers.push(o);
+    };
+    Cat.prototype.unsubscribe = function (o) {
     };
     return Cat;
 }(GameObject));
@@ -107,18 +113,18 @@ var Utils = (function () {
             return true;
         }
     };
-    Utils.makeGreenRings = function (arr, loops) {
+    Utils.makeGreenRings = function (arr, loops, s) {
         for (var i = 0; i < loops; i += 1) {
             var x = Math.floor(Math.random() * 900) + 100;
             var y = Math.floor(Math.random() * 900) + 100;
-            arr.push(new greenRing(x, y));
+            arr.push(new Ring.greenRing(x, y, s));
         }
     };
-    Utils.makeRedRings = function (arr, loops) {
+    Utils.makeRedRings = function (arr, loops, s) {
         for (var i = 0; i < loops; i += 1) {
             var x = Math.floor(Math.random() * 900) + 100;
             var y = Math.floor(Math.random() * 900) + 100;
-            arr.push(new redRing(x, y));
+            arr.push(new Ring.redRing(x, y, s));
         }
     };
     Utils.removeFromGame = function (go, arr) {
@@ -134,38 +140,54 @@ var Utils = (function () {
     };
     return Utils;
 }());
-var greenRing = (function (_super) {
-    __extends(greenRing, _super);
-    function greenRing(x, y) {
-        var _this = _super.call(this) || this;
-        _this.x = x;
-        _this.y = y;
-        _this.width = 20;
-        _this.height = 20;
-        _super.prototype.createDiv.call(_this, "greenRing");
-        return _this;
-    }
-    greenRing.prototype.move = function () {
-        this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
-    };
-    return greenRing;
-}(GameObject));
-var redRing = (function (_super) {
-    __extends(redRing, _super);
-    function redRing(x, y) {
-        var _this = _super.call(this) || this;
-        _this.x = x;
-        _this.y = y;
-        _this.width = 20;
-        _this.height = 20;
-        _super.prototype.createDiv.call(_this, "redRing");
-        return _this;
-    }
-    redRing.prototype.move = function () {
-        this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
-    };
-    return redRing;
-}(GameObject));
+var Ring;
+(function (Ring) {
+    var greenRing = (function (_super) {
+        __extends(greenRing, _super);
+        function greenRing(x, y, s) {
+            var _this = _super.call(this) || this;
+            s.subscribe(_this);
+            _this.x = x;
+            _this.y = y;
+            _this.width = 20;
+            _this.height = 20;
+            _super.prototype.createDiv.call(_this, "greenRing");
+            return _this;
+        }
+        greenRing.prototype.move = function () {
+            this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+        };
+        greenRing.prototype.notify = function () {
+            console.log("De kat beweegt ik moet niet opgepakt worden");
+        };
+        return greenRing;
+    }(GameObject));
+    Ring.greenRing = greenRing;
+})(Ring || (Ring = {}));
+var Ring;
+(function (Ring) {
+    var redRing = (function (_super) {
+        __extends(redRing, _super);
+        function redRing(x, y, s) {
+            var _this = _super.call(this) || this;
+            s.subscribe(_this);
+            _this.x = x;
+            _this.y = y;
+            _this.width = 20;
+            _this.height = 20;
+            _super.prototype.createDiv.call(_this, "redRing");
+            return _this;
+        }
+        redRing.prototype.move = function () {
+            this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+        };
+        redRing.prototype.notify = function () {
+            console.log("De kat beweegt ik moet wel opgepakt worden");
+        };
+        return redRing;
+    }(GameObject));
+    Ring.redRing = redRing;
+})(Ring || (Ring = {}));
 var Game = (function () {
     function Game() {
         var _this = this;
@@ -176,8 +198,8 @@ var Game = (function () {
         this.cat = new Cat(5, 200);
         window.addEventListener("keydown", function (event) { return _this.cat.behaviour.onKeyDown(event); });
         window.addEventListener("keyup", function (event) { return _this.cat.behaviour.onKeyUp(event); });
-        Utils.makeGreenRings(this.greenRings, 4);
-        Utils.makeRedRings(this.redRings, 12);
+        Utils.makeGreenRings(this.greenRings, 4, this.cat);
+        Utils.makeRedRings(this.redRings, 12, this.cat);
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
     Game.getInstance = function () {
@@ -209,12 +231,12 @@ var Game = (function () {
             }
         }
         if (this.redRings.length == 0) {
-            Utils.makeRedRings(this.redRings, 12);
+            Utils.makeRedRings(this.redRings, 12, this.cat);
             for (var i = 0; i < this.greenRings.length; i++) {
                 Utils.removeFromGame(this.greenRings[i], this.greenRings);
                 this.score += 1;
             }
-            Utils.makeGreenRings(this.greenRings, 4);
+            Utils.makeGreenRings(this.greenRings, 4, this.cat);
         }
         if (this.lifes <= 0) {
             dead = true;
@@ -233,13 +255,17 @@ window.addEventListener("load", function () {
     var g = new Game();
 });
 var Idle = (function () {
-    function Idle(c) {
+    function Idle(c, o) {
         this.cat = c;
     }
     Idle.prototype.update = function () {
     };
     Idle.prototype.onKeyDown = function (event) {
         this.cat.behaviour = new Moving(this.cat);
+        for (var _i = 0, _a = this.cat.observers; _i < _a.length; _i++) {
+            var o = _a[_i];
+            o.notify();
+        }
         console.log("behaviour verandert naar moving");
     };
     Idle.prototype.onKeyUp = function (event) {

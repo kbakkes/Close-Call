@@ -6,8 +6,8 @@
 class Game {
 
     private cat : Cat;
-    private greenRings: Array<greenRing> = new Array<greenRing>();
-    private redRings: Array<redRing> = new Array<redRing>();
+    private greenRings: Array<Ring.greenRing> = new Array<Ring.greenRing>();
+    private redRings: Array<Ring.redRing> = new Array<Ring.redRing>();
 
     public static instance:Game;
 
@@ -23,8 +23,8 @@ class Game {
         window.addEventListener("keyup", (event:KeyboardEvent) => this.cat.behaviour.onKeyUp(event));
         
         
-       Utils.makeGreenRings(this.greenRings,4);
-       Utils.makeRedRings(this.redRings,12);
+       Utils.makeGreenRings(this.greenRings,4,this.cat);
+       Utils.makeRedRings(this.redRings,12,this.cat);
 
     
         requestAnimationFrame(() => this.gameLoop());
@@ -67,12 +67,12 @@ class Game {
         }
 
         if(this.redRings.length == 0){
-            Utils.makeRedRings(this.redRings,12);
+            Utils.makeRedRings(this.redRings,12,this.cat);
             for(let i = 0; i<this.greenRings.length; i++){
                 Utils.removeFromGame(this.greenRings[i], this.greenRings);
                 this.score += 1;
             }
-            Utils.makeGreenRings(this.greenRings,4);
+            Utils.makeGreenRings(this.greenRings,4,this.cat);
         }
 
 
