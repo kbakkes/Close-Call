@@ -2,6 +2,7 @@
 /// <reference path="utils.ts"/>
 /// <reference path="greenRing.ts"/>
 /// <reference path="redRing.ts"/>
+/// <reference path="greensock.d.ts"/>
 
 class Game {
 
@@ -46,7 +47,7 @@ class Game {
             this.greenRings[i].move();
             if(Utils.checkColission(this.cat,this.greenRings[i])){
                 Utils.removeFromGame(this.greenRings[i],this.greenRings);
-
+    
                 this.lifes-= 1;
                 let lifesDiv = document.getElementById("lifes");
                 lifesDiv.innerHTML = "Lifes: " + this.lifes;
@@ -77,11 +78,12 @@ class Game {
 
 
 
-
+        // Als levens 0 zijn dan wordt het game over scherm getoont en met een TweenLite animatie naar het midden gebracht
         if(this.lifes <= 0){
             dead = true;
              let endDiv = document.getElementById("gameover");
              endDiv.innerHTML = "Game Over<br>Score: "+ this.score;
+             TweenLite.to(endDiv, 2, { ease: SlowMo.ease.config(0.7, 0.7, false), y: 400});
         }
         
         if(!dead) requestAnimationFrame(() => this.gameLoop());

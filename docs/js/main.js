@@ -115,15 +115,15 @@ var Utils = (function () {
     };
     Utils.makeGreenRings = function (arr, loops, s) {
         for (var i = 0; i < loops; i += 1) {
-            var x = Math.floor(Math.random() * 900) + 100;
-            var y = Math.floor(Math.random() * 900) + 100;
+            var x = Math.floor(Math.random() * 880) + 100;
+            var y = Math.floor(Math.random() * 880) + 100;
             arr.push(new Ring.greenRing(x, y, s));
         }
     };
     Utils.makeRedRings = function (arr, loops, s) {
         for (var i = 0; i < loops; i += 1) {
-            var x = Math.floor(Math.random() * 900) + 100;
-            var y = Math.floor(Math.random() * 900) + 100;
+            var x = Math.floor(Math.random() * 880) + 100;
+            var y = Math.floor(Math.random() * 800) + 100;
             arr.push(new Ring.redRing(x, y, s));
         }
     };
@@ -242,6 +242,7 @@ var Game = (function () {
             dead = true;
             var endDiv = document.getElementById("gameover");
             endDiv.innerHTML = "Game Over<br>Score: " + this.score;
+            TweenLite.to(endDiv, 2, { ease: SlowMo.ease.config(0.7, 0.7, false), y: 400 });
         }
         if (!dead)
             requestAnimationFrame(function () { return _this.gameLoop(); });

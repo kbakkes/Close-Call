@@ -75,14 +75,8 @@ gameOver{
     z-index: 9;
     font-size: 60px;
     margin-left: 25%;
-    margin-top: 40%;
     color: white;
-     animation-name: floating;
-    animation-duration: 3s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-
-
+    text-shadow: 3px 0 red, 0 1px red, 1px 0 red, 0 3px red;
 }
 
 

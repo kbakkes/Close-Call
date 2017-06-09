@@ -19,8 +19,8 @@ class Utils{
      */
         public static makeGreenRings( arr:Array<any>, loops:number,s:Subject){
               for (let i=0; i<loops; i+=1) {
-            let x = Math.floor(Math.random() * 900) + 100
-            let y = Math.floor(Math.random() * 900) + 100
+            let x = Math.floor(Math.random() * 880) + 100
+            let y = Math.floor(Math.random() * 880) + 100
             arr.push(new Ring.greenRing(x,y,s));
     }
         }
@@ -31,8 +31,8 @@ class Utils{
      */
         public static makeRedRings( arr:Array<any>, loops:number, s:Subject){
               for (let i=0; i<loops; i+=1) {
-            let x = Math.floor(Math.random() * 900) + 100
-            let y = Math.floor(Math.random() * 900) + 100
+            let x = Math.floor(Math.random() * 880) + 100
+            let y = Math.floor(Math.random() * 800) + 100
             arr.push(new Ring.redRing(x,y,s));
     }
         }
