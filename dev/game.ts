@@ -50,7 +50,7 @@ class Game {
     
                 this.lifes-= 1;
                 let lifesDiv = document.getElementById("lifes");
-                lifesDiv.innerHTML = "Lifes: " + this.lifes;
+                lifesDiv.innerHTML = "Lives: " + this.lifes;
             } 
         }
 

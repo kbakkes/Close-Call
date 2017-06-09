@@ -218,7 +218,7 @@ var Game = (function () {
                 Utils.removeFromGame(this.greenRings[i], this.greenRings);
                 this.lifes -= 1;
                 var lifesDiv = document.getElementById("lifes");
-                lifesDiv.innerHTML = "Lifes: " + this.lifes;
+                lifesDiv.innerHTML = "Lives: " + this.lifes;
             }
         }
         for (var i = 0; i < this.redRings.length; i++) {
