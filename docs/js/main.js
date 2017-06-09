@@ -72,6 +72,8 @@ var Cat = (function (_super) {
         this.observers.push(o);
     };
     Cat.prototype.unsubscribe = function (o) {
+        var index = this.observers.indexOf(o);
+        this.observers.splice(index);
     };
     return Cat;
 }(GameObject));

@@ -77,7 +77,8 @@ class Cat extends GameObject implements Subject {
             this.observers.push(o);
   }
         public unsubscribe(o:Observer):void {
-        
+            let index:number = this.observers.indexOf(o);
+            this.observers.splice(index);
   }
 
 
