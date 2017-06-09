@@ -276,13 +276,6 @@ var Idle = (function () {
     };
     return Idle;
 }());
-var Keys;
-(function (Keys) {
-    Keys[Keys["UP"] = 87] = "UP";
-    Keys[Keys["DOWN"] = 83] = "DOWN";
-    Keys[Keys["LEFT"] = 65] = "LEFT";
-    Keys[Keys["RIGHT"] = 68] = "RIGHT";
-})(Keys || (Keys = {}));
 var Moving = (function () {
     function Moving(c) {
         this.cat = c;
@@ -321,4 +314,11 @@ var Moving = (function () {
     };
     return Moving;
 }());
+var Keys;
+(function (Keys) {
+    Keys[Keys["UP"] = 87] = "UP";
+    Keys[Keys["DOWN"] = 83] = "DOWN";
+    Keys[Keys["LEFT"] = 65] = "LEFT";
+    Keys[Keys["RIGHT"] = 68] = "RIGHT";
+})(Keys || (Keys = {}));
 //# sourceMappingURL=main.js.map
