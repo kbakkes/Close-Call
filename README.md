@@ -3,14 +3,7 @@
 ## https://kbakkes.github.io/Ring-Collector/
 
 ## UML 
-### UML Notes
-#### Werkende onderdelen zijn: 
-- Game class
-- gameObject class
-- Utils class
-- Cat class
-- Behaviour Interface
-- Idle class
+
 
 ![UML](docs/images/ringCollector.png?raw=true "UML")
 
@@ -49,8 +42,8 @@ Deze kijkt of er een instance van game bestaat, als deze er niet is wordt het aa
 
 ### Strategy
 Strategy is in de game verwerkt doordat Cat een behaviour heeft. Standaard heeft Cat een `Idle` Behaviour. 
-Een ring kan twee verschillende Behaviours hebben, namelijk `Float` en `Destroyed`. Idle, Float en Destroyed
-implementeren alle 3 van de `Behaviour Interface`.
+Als `cat` gaat bewegen verandert Behaviour van Idle naar Moving. `Idle` en `Moving`
+implementeren beide van de `Behaviour Interface`.
 
 ### Encapsulation 
 Encapsulation is in het project verwerkt doordat properties en functies `public`, `protected` of `private` zijn.
@@ -66,30 +59,22 @@ Dit is gedaan door in `Game.ts` instances van Cat en Ring aan te maken.
 Ook is er gebruik gemaakt van composition in `Cat.ts` als er een nieuwe Behaviour wordt aangemaakt.
 Dit word namelijk gedaan door `this.behaviour = new Idle(this);` aan te roepen. 
 
+### Polymorfism
+In `Game.ts` wordt er bij het aanmaken van de eventlistener als parameter `event:KeyboardEvent` meegegeven.
+Vervolgens wordt er in `moving.ts` bij de functie `onKeyDown()` als parameter `event` meegegeven. 
+Dit werkt omdat **KeyboardEvent** een **Event** is. Hierdoor is er Polymorfism toegepast in de game.
 
-## Nagekeken door Kenrick Fontijne - 0909758
+### Observer
+Het Observer Pattern is toegepast in de game doordat `redRing` en `greenRing` allebei de `Observer` Interface implementeren.
+Hierdoor wordt de `notify()` functie uitgevoerd door `Cat` omdat deze class de inferface `Subject` implementeert. 
 
-### Interface
-behaviour.ts is inderdaad een interface. Niks op aan te merken.
+### Namespace 
+Namespace is toegepast in de Game doordat er een `namespace Rings` is. Bij het aanmaken van een nieuwe `redRing` of `greenRing` typ je dus bijvoorbeeld: `let redRing = new Ring.redRing()`.
 
-### Static utility method
-De public static instance in game.ts is niet een static utility method. In je utils.ts staat een public method, deze kan een public static method zijn. Dit heb ik veranderd. In plaats van this.utils.checkColission(this.cat,this.rings[i]); kan je nu de checkColission functie zo aanroepen: Utils.checkColission(this.cat,this.rings[i]);
+### Enumerations
 
-Dit betekent ook dat je in je game.ts geen this.utils = new Utils(); meer hoeft aan te maken. Je kan nu altijd vanuit iedere class de checkColission functie aanroepen met Utils.checkColission();
+Enumerations zit in de game doordat er in de map Definitions `keys.ts` zit. Hierin staat gedefinieerd welke Unicode de toetsen hebben.
 
-### Singleton
-game.ts is inderdaad een singleton. Niks op aan te merken.
-
-### Strategy
-Er is wel een strategy pattern toegevoegd, maar niet goed gebruikt. Ik ga er van uit dat de idle behaviour van de cat betekent dat hij stilstaat. Ik kom alleen allemaal movement functies tegen in idle.ts, als je de cat laat bewegen dan is het handig om deze functies dus in moving.ts te zetten. Op deze manier maak je dan gebruik van verschillende behaviours. Ik heb alle movement van de cat naar moving.ts verplaatst. Nu is het de bedoeling dat als er geen toetsen worden ingedrukt, dat de behaviour van cat dan Idle is. In Idle kan je dan alle speeds van de cat op 0 zetten. Zodra je wel toetsen aan het indrukken bent dan moet de behaviour veranderen naar Moving. In moving kan je dan de juiste speed aanpassen.
-
-### Encapsulation
-Er is gebruik gemaakt van encapsulation.
-
-### Inheritance
-Er is gebruik gemaakt van inheritance.
-
-### Composition
-Er is gebruik gemaakt van composition.
-
-### Voldoende
+### Library
+In de Game is er gebruik gemaakt van een Animatie Library van Greensock. Deze is te vinden in `greensock.d.ts`. Zodra de speler 0 levens heeft wordt er een Game Over div op het scherm getoont. Deze komt naar het midden van het scherm met behulp van deze library.
+`TweenLite.to(endDiv, 2, { ease: SlowMo.ease.config(0.7, 0.7, false), y: 400});`

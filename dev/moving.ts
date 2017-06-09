@@ -18,15 +18,12 @@ class Moving implements Behaviour{
         }
 
         onKeyUp(event){
-                // Alle speeds worden hier nog gereset naar 0 omdat je nog geen gebruik maakt van de idle behaviour.
-                // Als je de idle behaviour gefixt hebt dan kan je daar deze speed reset in plaatsen.
+                
                 this.cat.upSpeed = this.cat.downSpeed = this.cat.leftSpeed = this.cat.rightSpeed = 0;
 
 
-                // In deze functie zou je iets kunnen maken om de behaviour weer terug te veranderen naar idle als ALLE toetsen zijn losgelaten.
+            
 
-                // this.cat.behaviour = new Idle(this.cat);
-                // console.log("behaviour verandert naar idle");
         }
 
 
@@ -44,13 +41,11 @@ class Moving implements Behaviour{
             
             case this.cat.downKey:
             this.cat.downSpeed = 5;
-            // console.log("S");
             this.cat.y += this.cat.downSpeed;
             break;
 
             case this.cat.leftKey:
             this.cat.leftSpeed = 5;
-            // console.log("A");
             this.cat.x -= this.cat.leftSpeed;
             // facingLeft laten veranderen zodat de cat weet dat hij moet omdraaien.
             this.cat.facingLeft = true;
@@ -58,7 +53,6 @@ class Moving implements Behaviour{
 
             case this.cat.rightKey:
             this.cat.rightSpeed = 5;
-            // console.log("D");
             this.cat.x += 10;
             // facingLeft laten veranderen zodat de cat weet dat hij moet omdraaien.
             this.cat.facingLeft = false;
