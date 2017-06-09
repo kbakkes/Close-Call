@@ -110,10 +110,6 @@ var Utils = (function () {
             arr.splice(i, 1);
         }
     };
-    Utils.gameOver = function () {
-        var endDiv = document.getElementById("gameover");
-        endDiv.innerHTML = "Game Over<br>Score: 0";
-    };
     return Utils;
 }());
 var Ring;
