@@ -60,9 +60,8 @@ Ook is er gebruik gemaakt van composition in `Cat.ts` als er een nieuwe Behaviou
 Dit word namelijk gedaan door `this.behaviour = new Idle(this);` aan te roepen. 
 
 ### Polymorfism
-In `Game.ts` wordt er bij het aanmaken van de eventlistener als parameter `event:KeyboardEvent` meegegeven.
-Vervolgens wordt er in `moving.ts` bij de functie `onKeyDown()` als parameter `event` meegegeven. 
-Dit werkt omdat **KeyboardEvent** een **Event** is. Hierdoor is er Polymorfism toegepast in de game.
+In `Cat.ts` wordt `Behaviour` aangeroepen. Doordat Behaviour wordt aangeroepen in plaats van Idle of Moving, kan `Behaviour` zowel `Idle` als `Moving` zijn. Hierdoor is er **Polymorfisme** toegepast in de Game. 
+
 
 ### Observer
 Het Observer Pattern is toegepast in de game doordat `redRing` en `greenRing` allebei de `Observer` Interface implementeren.
