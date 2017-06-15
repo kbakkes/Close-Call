@@ -99,5 +99,7 @@ class Game {
 
 // load
 window.addEventListener("load", function() {
-   let g = new Game();
-});
+   let g = Game.getInstance();
+})
+
+

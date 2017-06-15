@@ -33,9 +33,7 @@ Dit is toegepast bij de Behaviour Interface. Deze interface bevat functies zoals
 `move()`, `onKeyDown()` en `onKeyUp();`. 
 
 ### Static Utility Method
-In `game.ts` zit een public static instance van game. Vervolgens wordt bij het laden
-van de game `let g = new Game();` aangeroepen.
-
+Dit heb ik toegepast door de functions uit `utils.ts`.
 ### Singleton 
 Singleton is toegepast in de game door in de game class een functie `getInstance()` te maken.
 Deze kijkt of er een instance van game bestaat, als deze er niet is wordt het aangemaakt. 

@@ -225,7 +225,7 @@ var Game = (function () {
     return Game;
 }());
 window.addEventListener("load", function () {
-    var g = new Game();
+    var g = Game.getInstance();
 });
 var Idle = (function () {
     function Idle(c, o) {
