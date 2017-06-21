@@ -26,7 +26,7 @@ namespace Ring{
         this.div.style.transform ="translate("+this.x +"px,"+this.y+"px)";
         
     }
-
+// observer pattern
   public notify(){ 
       console.log("De kat beweegt ik moet niet opgepakt worden");
   }

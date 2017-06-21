@@ -73,6 +73,9 @@ class Cat extends GameObject implements Subject {
         }
     } 
 
+
+
+       // observer pattern  
         public subscribe(o:Observer):void {
             this.observers.push(o);
   }

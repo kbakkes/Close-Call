@@ -31,7 +31,7 @@ class Game {
         requestAnimationFrame(() => this.gameLoop());
     }
 
-        // als er geen game instance is word deze aangemaakt
+        // if there is no game instance a new one is made
         public static getInstance(){
         if(Game.instance == null){
             Game.instance = new Game();
@@ -39,6 +39,9 @@ class Game {
         return Game.instance;
     }
 
+
+
+    // this loops while the game is active
     private gameLoop(){
         this.cat.move();
         let dead = false; 
@@ -47,7 +50,8 @@ class Game {
             this.greenRings[i].move();
             if(Utils.checkColission(this.cat,this.greenRings[i])){
                 Utils.removeFromGame(this.greenRings[i],this.greenRings);
-    
+                
+                // show lives 
                 this.lifes-= 1;
                 let lifesDiv = document.getElementById("lifes");
                 lifesDiv.innerHTML = "Lives: " + this.lifes;
@@ -61,6 +65,7 @@ class Game {
             if(Utils.checkColission(this.cat,this.redRings[i])){
             Utils.removeFromGame(this.redRings[i],this.redRings);
             
+            // add score
             this.score ++
             let scoreDiv = document.getElementById("score");
             scoreDiv.innerHTML = "Score: " + this.score;
@@ -84,6 +89,7 @@ class Game {
              let endDiv = document.getElementById("gameover");
              endDiv.innerHTML = "Game Over<br>Score: "+ this.score;
              TweenLite.to(endDiv, 2, { ease: SlowMo.ease.config(0.7, 0.7, false), y: 400});
+             
         }
         
         if(!dead) requestAnimationFrame(() => this.gameLoop());

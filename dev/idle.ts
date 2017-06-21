@@ -14,8 +14,7 @@ class Idle implements Behaviour{
         }
 
         onKeyDown(event){
-            // In deze functie zou je iets kunnen maken om de behaviour van de cat aan te passen als er een toets ingedrukt wordt.
-
+            // if the cat moves then the rings will be notified
             this.cat.behaviour = new Moving(this.cat);
              for (let o of this.cat.observers){
              o.notify();

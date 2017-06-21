@@ -3,6 +3,10 @@
 
 class Utils{
 
+
+     /**
+     * checks if there is colission between 2 gameobjects
+     */
     public static checkColission(obj1:GameObject, obj2:GameObject) {
         if (obj1.getX() < obj2.getX() + obj2.getWidth() &&
         obj1.getX() + obj1.getWidth() > obj2.getX() &&
@@ -15,7 +19,7 @@ class Utils{
         }
 
     /**
-     * maakt een ring instance op een random plek aan en zet deze in de array
+     * make a green ring instance and pushes it into the array
      */
         public static makeGreenRings( arr:Array<any>, loops:number,s:Subject){
               for (let i=0; i<loops; i+=1) {
@@ -27,7 +31,7 @@ class Utils{
 
 
    /**
-     * maakt een ring instance op een random plek aan en zet deze in de array
+     * make a red ring instance and pushes it into the array
      */
         public static makeRedRings( arr:Array<any>, loops:number, s:Subject){
               for (let i=0; i<loops; i+=1) {
@@ -40,7 +44,7 @@ class Utils{
 
 
     /**
-     * verwijder een item uit een array, en verwijder meteen het dom element uit de body
+     * deletes an item from the array, then removes the div 
      */
     public static removeFromGame(go:GameObject, arr:Array<any>){
         go.div.remove();
