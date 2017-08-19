@@ -160,6 +160,28 @@ var Ring;
     }(GameObject));
     Ring.redRing = redRing;
 })(Ring || (Ring = {}));
+var Start = (function (_super) {
+    __extends(Start, _super);
+    function Start(x, y, s) {
+        var _this = _super.call(this) || this;
+        s.subscribe(_this);
+        _this.x = x;
+        _this.y = y;
+        _this.width = 200;
+        _this.height = 30;
+        _this.startDiv = document.getElementById("start");
+        _super.prototype.createDiv.call(_this, "start");
+        return _this;
+    }
+    Start.prototype.move = function () {
+        this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+    };
+    Start.prototype.notify = function () {
+        console.log("StartMessage verwijderen observer pattern test");
+        this.startDiv.innerHTML = "";
+    };
+    return Start;
+}(GameObject));
 var Game = (function () {
     function Game() {
         var _this = this;
@@ -172,6 +194,7 @@ var Game = (function () {
         window.addEventListener("keyup", function (event) { return _this.cat.behaviour.onKeyUp(event); });
         Utils.makeGreenRings(this.greenRings, 4, this.cat);
         Utils.makeRedRings(this.redRings, 12, this.cat);
+        this.start = new Start(500, 50, this.cat);
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
     Game.getInstance = function () {

@@ -2,11 +2,13 @@
 /// <reference path="utils.ts"/>
 /// <reference path="greenRing.ts"/>
 /// <reference path="redRing.ts"/>
+/// <reference path="start.ts"/>
 /// <reference path="greensock.d.ts"/>
 
 class Game {
 
     private cat : Cat;
+    public start:Start;
     private greenRings: Array<Ring.greenRing> = new Array<Ring.greenRing>();
     private redRings: Array<Ring.redRing> = new Array<Ring.redRing>();
 
@@ -26,6 +28,7 @@ class Game {
         
        Utils.makeGreenRings(this.greenRings,4,this.cat);
        Utils.makeRedRings(this.redRings,12,this.cat);
+       this.start = new Start(500,50,this.cat); 
 
     
         requestAnimationFrame(() => this.gameLoop());
