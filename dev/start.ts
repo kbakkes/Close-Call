@@ -31,7 +31,7 @@
     }
 
     public notify(){ 
-     console.log("StartMessage verwijderen observer pattern test");
+     console.log("Zodra de speler beweegt gaat de start message weg");
      this.startDiv.innerHTML = "";
     }
 

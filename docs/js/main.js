@@ -177,7 +177,7 @@ var Start = (function (_super) {
         this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
     };
     Start.prototype.notify = function () {
-        console.log("StartMessage verwijderen observer pattern test");
+        console.log("Zodra de speler beweegt gaat de start message weg");
         this.startDiv.innerHTML = "";
     };
     return Start;

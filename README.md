@@ -1,3 +1,22 @@
+# Update voor Herkansing
+
+### Observer Pattern
+
+- `Start.ts` implementeert `Observer.ts`, en   `Cat.ts` implementeert van `Subject.ts`. Als het beginscherm wordt       getoont dan is er eerst een **Start** tekst te zien die aangeeft dat je W A S D moet indrukken om het spel te       starten. Zodra de speler dit doet, wordt de observer op de hoogte gesteld zodat de tekst kan worden verwijderd. 
+    
+             this.cat.behaviour = new Moving(this.cat);
+             for (let o of this.cat.observers){
+             o.notify();
+
+
+
+             public notify(){ 
+                console.log("Zodra de speler beweegt gaat de start message weg");
+                this.startDiv.innerHTML = "";
+    
+
+
+
 # Ring Collector
 
 ## https://kbakkes.github.io/Ring-Collector/
