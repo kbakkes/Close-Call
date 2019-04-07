@@ -31,7 +31,9 @@ class Game {
         window.addEventListener("keyup", (event:KeyboardEvent) => this.cat.behaviour.onKeyUp(event));
         
         Utils.makeSuperRings('black',this.blackrings,3,this.cat);
-        console.log(this.blackrings);
+        Utils.makeSuperRings('yellow',this.yellowrings,3,this.cat);
+
+
        Utils.makeGreenRings(this.greenRings,4,this.cat);
        Utils.makeRedRings(this.redRings,12,this.cat);
        this.start = new Start(500,50,this.cat); 
@@ -96,11 +98,23 @@ class Game {
             Utils.makeSuperRings('black',this.blackrings,3,this.cat);
         }
 
+        if(this.yellowrings.length === 0){
+            Utils.makeSuperRings('yellow',this.yellowrings,3,this.cat);
+        }
+
         for(let i=0; i<this.blackrings.length; i++){
             if(Utils.checkColission(this.cat, this.blackrings[i])){
                 Utils.removeFromGame(this.blackrings[i], this.blackrings);
                 this.score -=5;
                 this.lifes -=1;
+            }
+        }
+
+
+        for(let i=0; i<this.yellowrings.length; i++){
+            if(Utils.checkColission(this.cat, this.yellowrings[i])){
+                Utils.removeFromGame(this.yellowrings[i], this.yellowrings);
+                this.score +=5;
             }
         }
 

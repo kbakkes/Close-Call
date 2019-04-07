@@ -133,21 +133,6 @@ var Ring;
 })(Ring || (Ring = {}));
 var RingFactory = (function () {
     function RingFactory() {
-        this.createRing = function (color, s) {
-            var x = Math.floor(Math.random() * 880) + 100;
-            var y = Math.floor(Math.random() * 880) + 100;
-            switch (color) {
-                case "yellow": {
-                    var ring = new Ring.yellowRing(x, y, s);
-                    ring.move();
-                    return ring;
-                }
-                case "black": {
-                    var ring = new Ring.blackRing(x, y, s);
-                    return ring;
-                }
-            }
-        };
         this.createRings = function (array, color, amount, s) {
             for (var i = 0; i < amount; i++) {
                 switch (color) {
@@ -155,7 +140,8 @@ var RingFactory = (function () {
                         var x = Math.floor(Math.random() * 880) + 100;
                         var y = Math.floor(Math.random() * 880) + 100;
                         var ring = new Ring.yellowRing(x, y, s);
-                        break;
+                        ring.move();
+                        return ring;
                     }
                     case "black": {
                         var x = Math.floor(Math.random() * 880) + 100;
@@ -307,7 +293,7 @@ var Game = (function () {
         window.addEventListener("keydown", function (event) { return _this.cat.behaviour.onKeyDown(event); });
         window.addEventListener("keyup", function (event) { return _this.cat.behaviour.onKeyUp(event); });
         Utils.makeSuperRings('black', this.blackrings, 3, this.cat);
-        console.log(this.blackrings);
+        Utils.makeSuperRings('yellow', this.yellowrings, 3, this.cat);
         Utils.makeGreenRings(this.greenRings, 4, this.cat);
         Utils.makeRedRings(this.redRings, 12, this.cat);
         this.start = new Start(500, 50, this.cat);
@@ -353,11 +339,20 @@ var Game = (function () {
         if (this.blackrings.length === 0) {
             Utils.makeSuperRings('black', this.blackrings, 3, this.cat);
         }
+        if (this.yellowrings.length === 0) {
+            Utils.makeSuperRings('yellow', this.yellowrings, 3, this.cat);
+        }
         for (var i = 0; i < this.blackrings.length; i++) {
             if (Utils.checkColission(this.cat, this.blackrings[i])) {
                 Utils.removeFromGame(this.blackrings[i], this.blackrings);
                 this.score -= 5;
                 this.lifes -= 1;
+            }
+        }
+        for (var i = 0; i < this.yellowrings.length; i++) {
+            if (Utils.checkColission(this.cat, this.yellowrings[i])) {
+                Utils.removeFromGame(this.yellowrings[i], this.yellowrings);
+                this.score += 5;
             }
         }
         if (this.lifes <= 0) {

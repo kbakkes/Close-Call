@@ -4,22 +4,6 @@
 
 
 class RingFactory {
-    createRing = (color,s) => {
-        let x = Math.floor(Math.random() * 880) + 100;
-        let y = Math.floor(Math.random() * 880) + 100;
-
-        switch(color){
-            case "yellow":{
-             let ring = new Ring.yellowRing(x,y,s);
-             ring.move();
-             return ring;
-            }
-            case "black":{
-                let ring = new Ring.blackRing(x,y,s);
-                return ring; 
-               }
-        }
-    }
 
 createRings = (array:Array<any>,color:string, amount:number,s:Subject) => {
 
@@ -29,7 +13,8 @@ createRings = (array:Array<any>,color:string, amount:number,s:Subject) => {
                 let x = Math.floor(Math.random() * 880) + 100;
                 let y = Math.floor(Math.random() * 880) + 100;
                 let ring = new Ring.yellowRing(x,y,s);
-                break;
+                ring.move();
+                return ring;
             }
             case "black":{
                 let x = Math.floor(Math.random() * 880) + 100;
