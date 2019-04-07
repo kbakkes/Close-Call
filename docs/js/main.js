@@ -276,6 +276,7 @@ var Game = (function () {
         this.greenRings = new Array();
         this.redRings = new Array();
         this.blackrings = [];
+        this.yellowrings = [];
         this.score = 0;
         this.lifes = 3;
         this.cat = new Cat(5, 200);
@@ -331,13 +332,15 @@ var Game = (function () {
         for (var i = 0; i < this.blackrings.length; i++) {
             if (Utils.checkColission(this.cat, this.blackrings[i])) {
                 Utils.removeFromGame(this.blackrings[i], this.blackrings);
-                this.score -= 10;
+                this.score -= 5;
+                this.lifes -= 1;
             }
         }
         if (this.lifes <= 0) {
             dead = true;
             var endDiv = document.getElementById("gameover");
             endDiv.innerHTML = "Game Over<br>Score: " + this.score;
+            TweenLite.to(endDiv, 2, { ease: SlowMo.ease.config(0.7, 0.7, false), y: 400 });
         }
         if (!dead)
             requestAnimationFrame(function () { return _this.gameLoop(); });

@@ -68,12 +68,12 @@ cat {
 
 yellowRing {
     background-image: url(../images/yellowRing.png);
-    width: 50px; height:50px;    z-index: 9;
+    width: 50px; height:50px;
 }
 
 blackRing {
     background-image: url(../images/blackRing.png);
-    width: 50px; height:50px;    z-index: 9;
+    width: 50px; height:50px;   
 }
 
 catRight{

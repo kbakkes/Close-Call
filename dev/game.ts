@@ -18,6 +18,7 @@ class Game {
 
     public static instance:Game;
     blackrings = [];
+    yellowrings = [];
 
     private score: number = 0;
     private lifes: number = 3;
@@ -98,9 +99,9 @@ class Game {
         for(let i=0; i<this.blackrings.length; i++){
             if(Utils.checkColission(this.cat, this.blackrings[i])){
                 Utils.removeFromGame(this.blackrings[i], this.blackrings);
-                this.score -=10;
+                this.score -=5;
+                this.lifes -=1;
             }
-
         }
 
   
@@ -115,6 +116,7 @@ class Game {
             dead = true;
              let endDiv = document.getElementById("gameover");
              endDiv.innerHTML = "Game Over<br>Score: "+ this.score;
+             TweenLite.to(endDiv, 2, { ease: SlowMo.ease.config(0.7, 0.7, false), y: 400});
              
         }
         
