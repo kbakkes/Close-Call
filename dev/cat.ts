@@ -46,22 +46,18 @@ class Cat extends GameObject implements Subject {
        // Deze behaviour staat nu op moving, maar als je de switch tussen idle en moving hebt gemaakt dan zal deze behaviour op idle moeten beginnen.
        this.behaviour = new Idle(this,this.observers);
        
-
-
         // startpositie
          this.x = 100;
          this.y = 220;
-       
-
-       
     }
+
+
 
     public move():void {
 
         this.behaviour.move();
         
-        
-
+    
         // Ik maak hier nu gebruik van de facingLeft variabele om de cat om te draaien met scaleX().
         // Dit is een manier om een plaatje om te draaien zonder dat je een gespiegeld nieuw plaatje hoeft in de laden.
         // Scheelt dus in performance en zorgt er voor dat je cat niet gaan "flikkeren" tijdens het omdraaien.
@@ -83,10 +79,13 @@ class Cat extends GameObject implements Subject {
             let index:number = this.observers.indexOf(o);
             this.observers.splice(index);
   }
+}
 
+const cat = () => {
+    const meow = 'meow'; 
+    
 
-   
-
-
-
+    return { 
+         talk: () => console.log(meow)
+        } 
 }

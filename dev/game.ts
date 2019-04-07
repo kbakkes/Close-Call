@@ -4,28 +4,33 @@
 /// <reference path="redRing.ts"/>
 /// <reference path="start.ts"/>
 /// <reference path="greensock.d.ts"/>
+/// <reference path="ringFactory.ts"/>
+/// <reference path="blackRing.ts"/>
+
 
 class Game {
 
+    ringFactory = new RingFactory()
     private cat : Cat;
     public start:Start;
     private greenRings: Array<Ring.greenRing> = new Array<Ring.greenRing>();
     private redRings: Array<Ring.redRing> = new Array<Ring.redRing>();
 
     public static instance:Game;
+    blackrings = [];
 
     private score: number = 0;
     private lifes: number = 3;
-    
 
     constructor() {
         this.cat = new Cat(5,200);
-
+        
         // Keyboard event listeners nu hier neergezet zodat ze maar 1 keer worden aangemaakt.
         window.addEventListener("keydown", (event:KeyboardEvent) => this.cat.behaviour.onKeyDown(event));
         window.addEventListener("keyup", (event:KeyboardEvent) => this.cat.behaviour.onKeyUp(event));
         
-        
+        Utils.makeSuperRings('black',this.blackrings,3,this.cat);
+        console.log(this.blackrings);
        Utils.makeGreenRings(this.greenRings,4,this.cat);
        Utils.makeRedRings(this.redRings,12,this.cat);
        this.start = new Start(500,50,this.cat); 
@@ -49,7 +54,8 @@ class Game {
         this.cat.move();
         let dead = false; 
 
-        for(let i=0; i<this.greenRings.length; i++){
+        console.log(this.blackrings);
+            for(let i=0; i<this.greenRings.length; i++){
             this.greenRings[i].move();
             if(Utils.checkColission(this.cat,this.greenRings[i])){
                 Utils.removeFromGame(this.greenRings[i],this.greenRings);
@@ -85,19 +91,39 @@ class Game {
         }
 
 
+        if(this.blackrings.length === 0){
+            Utils.makeSuperRings('black',this.blackrings,3,this.cat);
+        }
+
+        for(let i=0; i<this.blackrings.length; i++){
+            if(Utils.checkColission(this.cat, this.blackrings[i])){
+                Utils.removeFromGame(this.blackrings[i], this.blackrings);
+                this.score -=10;
+            }
+
+        }
+
+  
+        
+
+
+        // colission met blackrings checken;
+        
 
         // Als levens 0 zijn dan wordt het game over scherm getoont en met een TweenLite animatie naar het midden gebracht
         if(this.lifes <= 0){
             dead = true;
              let endDiv = document.getElementById("gameover");
              endDiv.innerHTML = "Game Over<br>Score: "+ this.score;
-             TweenLite.to(endDiv, 2, { ease: SlowMo.ease.config(0.7, 0.7, false), y: 400});
              
         }
         
         if(!dead) requestAnimationFrame(() => this.gameLoop());
         
     }
+
+
+   
 
     public endGame(){
         document.getElementById("score").innerHTML = "Score : 0";

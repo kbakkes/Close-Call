@@ -8,7 +8,6 @@ class Moving implements Behaviour{
         
     }
 
-
         update(){
         }
 
@@ -18,18 +17,14 @@ class Moving implements Behaviour{
         }
 
         onKeyUp(event){
-                
                 this.cat.upSpeed = this.cat.downSpeed = this.cat.leftSpeed = this.cat.rightSpeed = 0;
-
-
-            
-
         }
 
 
         onKeyDown(event){
                 var x = event.which || event.keyCode;
-           
+
+                
             
             // console.log(x);
             // Verschillende functies voor als er op WASD wordt ingedrukt. 

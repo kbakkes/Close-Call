@@ -1,5 +1,5 @@
 class Idle implements Behaviour{
-    public cat:Cat
+    public cat:Cat;
     
     
     
