@@ -107,6 +107,30 @@ var cat = function () {
         talk: function () { return console.log(meow); }
     };
 };
+var Ring;
+(function (Ring) {
+    var yellowRing = (function (_super) {
+        __extends(yellowRing, _super);
+        function yellowRing(x, y, s) {
+            var _this = _super.call(this) || this;
+            s.subscribe(_this);
+            _this.x = x;
+            _this.y = y;
+            _this.width = 20;
+            _this.height = 20;
+            _super.prototype.createDiv.call(_this, "yellowRing");
+            return _this;
+        }
+        yellowRing.prototype.move = function () {
+            this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+        };
+        yellowRing.prototype.notify = function () {
+            console.log("De kat beweegt ik moet wel opgepakt worden");
+        };
+        return yellowRing;
+    }(GameObject));
+    Ring.yellowRing = yellowRing;
+})(Ring || (Ring = {}));
 var RingFactory = (function () {
     function RingFactory() {
         this.createRing = function (color, s) {
@@ -412,30 +436,6 @@ var Moving = (function () {
     };
     return Moving;
 }());
-var Ring;
-(function (Ring) {
-    var yellowRing = (function (_super) {
-        __extends(yellowRing, _super);
-        function yellowRing(x, y, s) {
-            var _this = _super.call(this) || this;
-            s.subscribe(_this);
-            _this.x = x;
-            _this.y = y;
-            _this.width = 20;
-            _this.height = 20;
-            _super.prototype.createDiv.call(_this, "yellowRing");
-            return _this;
-        }
-        yellowRing.prototype.move = function () {
-            this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
-        };
-        yellowRing.prototype.notify = function () {
-            console.log("De kat beweegt ik moet wel opgepakt worden");
-        };
-        return yellowRing;
-    }(GameObject));
-    Ring.yellowRing = yellowRing;
-})(Ring || (Ring = {}));
 var Keys;
 (function (Keys) {
     Keys[Keys["UP"] = 87] = "UP";

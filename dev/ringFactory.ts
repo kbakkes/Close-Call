@@ -1,4 +1,4 @@
-/// <reference path="star.ts"/>
+/// <reference path="yellowRing.ts"/>
 /// <reference path="blackRing.ts"/>
 
 
