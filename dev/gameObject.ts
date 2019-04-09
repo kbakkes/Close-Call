@@ -43,5 +43,26 @@ class GameObject {
         
     }
 
+    public move():void{
+        this.div.style.transform ="translate("+this.x +"px,"+this.y+"px)";
+    }
 
+    public customMove(x,y):void{
+        this.div.style.transform ="translate("+x+"px,"+y+"px)";
+    }
+
+
+    // setters
+    public setX(x){
+        this.x = x;
+    }
+    public setY(y){
+        this.y = y;
+    }
+    public setWidth(w){
+        this.width = w;
+    }
+    public setHeight(h){
+        this.height = h;
+    }
 }

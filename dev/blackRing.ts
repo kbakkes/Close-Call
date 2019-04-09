@@ -27,6 +27,10 @@ namespace Ring{
         this.div.style.transform ="translate("+this.x +"px,"+this.y+"px)";
     }
 
+    public customMove(x:number,y:number):void{
+        this.div.style.transform ="translate("+x +"px,"+y+"px)";
+    }
+
     public notify(){ 
      console.log("De kat beweegt ik moet wel opgepakt worden");
     }

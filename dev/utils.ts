@@ -37,10 +37,7 @@ class Utils{
     
                 return true; 
                     }
-            }
-
-        //this.width = 146;
-        // this.height = 128;
+                }
 
     /**
      * make a green ring instance and pushes it into the array
@@ -53,17 +50,19 @@ class Utils{
             }
         }
 
-
+        
         public static makeSuperRings(color:string,array:Array<any>,loops:number,s:Subject){
             let ringFactory = new RingFactory();
 
             for (let i=0; i<loops; i+=1) {
-                let x = Math.floor(Math.random() * 880) + 100
-                let y = Math.floor(Math.random() * 880) + 100
                 array.push(ringFactory.createRings(array,color,loops,s))
                 }
         }
 
+        public static makeCustomRing(ring:SuperRing,array:Array<any>, s:Subject){
+            let ringFactory = new RingFactory();
+            array.push(ringFactory.createCustomRing(ring,array,s));
+        }
 
    /**
      * make a red ring instance and pushes it into the array

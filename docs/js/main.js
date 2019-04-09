@@ -34,6 +34,24 @@ var GameObject = (function () {
     };
     GameObject.prototype.delete = function () {
     };
+    GameObject.prototype.move = function () {
+        this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+    };
+    GameObject.prototype.customMove = function (x, y) {
+        this.div.style.transform = "translate(" + x + "px," + y + "px)";
+    };
+    GameObject.prototype.setX = function (x) {
+        this.x = x;
+    };
+    GameObject.prototype.setY = function (y) {
+        this.y = y;
+    };
+    GameObject.prototype.setWidth = function (w) {
+        this.width = w;
+    };
+    GameObject.prototype.setHeight = function (h) {
+        this.height = h;
+    };
     return GameObject;
 }());
 var Ring;
@@ -52,6 +70,9 @@ var Ring;
         }
         blackRing.prototype.move = function () {
             this.div.style.transform = "translate(" + this.x + "px," + this.y + "px)";
+        };
+        blackRing.prototype.customMove = function (x, y) {
+            this.div.style.transform = "translate(" + x + "px," + y + "px)";
         };
         blackRing.prototype.notify = function () {
             console.log("De kat beweegt ik moet wel opgepakt worden");
@@ -107,6 +128,31 @@ var cat = function () {
         talk: function () { return console.log(meow); }
     };
 };
+var SuperRing = (function (_super) {
+    __extends(SuperRing, _super);
+    function SuperRing() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    SuperRing.prototype.getColor = function () {
+        return this.color;
+    };
+    return SuperRing;
+}(GameObject));
+var CustomRing = (function (_super) {
+    __extends(CustomRing, _super);
+    function CustomRing() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.color = '';
+        return _this;
+    }
+    CustomRing.prototype.amount = function () {
+        return this.amount();
+    };
+    CustomRing.prototype.effect = function () {
+        return 'lifes';
+    };
+    return CustomRing;
+}(SuperRing));
 var Ring;
 (function (Ring) {
     var yellowRing = (function (_super) {
@@ -133,6 +179,18 @@ var Ring;
 })(Ring || (Ring = {}));
 var RingFactory = (function () {
     function RingFactory() {
+        this.createCustomRing = function (ring, array, s) {
+            var color = ring.getColor();
+            var x = Math.floor(Math.random() * 880) + 100;
+            var y = Math.floor(Math.random() * 880) + 100;
+            ring.createDiv(color);
+            ring.setY(y);
+            ring.setX(x);
+            ring.setWidth(20);
+            ring.setHeight(20);
+            ring.customMove(x, y);
+            return ring;
+        };
         this.createRings = function (array, color, amount, s) {
             for (var i = 0; i < amount; i++) {
                 switch (color) {
@@ -188,10 +246,12 @@ var Utils = (function () {
     Utils.makeSuperRings = function (color, array, loops, s) {
         var ringFactory = new RingFactory();
         for (var i = 0; i < loops; i += 1) {
-            var x = Math.floor(Math.random() * 880) + 100;
-            var y = Math.floor(Math.random() * 880) + 100;
             array.push(ringFactory.createRings(array, color, loops, s));
         }
+    };
+    Utils.makeCustomRing = function (ring, array, s) {
+        var ringFactory = new RingFactory();
+        array.push(ringFactory.createCustomRing(ring, array, s));
     };
     Utils.makeRedRings = function (arr, loops, s) {
         for (var i = 0; i < loops; i += 1) {
@@ -279,6 +339,40 @@ var Start = (function (_super) {
     };
     return Start;
 }(GameObject));
+var LevelsCollection = (function () {
+    function LevelsCollection() {
+        this.items = [];
+    }
+    LevelsCollection.prototype.getItems = function () {
+        return this.items;
+    };
+    LevelsCollection.prototype.getCount = function () {
+        return this.items.length;
+    };
+    LevelsCollection.prototype.addItem = function (item) {
+        this.items.push(item);
+    };
+    LevelsCollection.prototype.getIterator = function () {
+        return new LevelsIterator(this);
+    };
+    LevelsCollection.prototype.getReverseIterator = function () {
+        return new LevelsIterator(this, true);
+    };
+    return LevelsCollection;
+}());
+var Level = (function () {
+    function Level(redrings, greenrings) {
+        this.redrings = redrings;
+        this.greenrings = greenrings;
+    }
+    Level.prototype.getRedRings = function () {
+        return this.redrings;
+    };
+    Level.prototype.getGreenRings = function () {
+        return this.greenrings;
+    };
+    return Level;
+}());
 var Game = (function () {
     function Game() {
         var _this = this;
@@ -287,15 +381,33 @@ var Game = (function () {
         this.redRings = new Array();
         this.blackrings = [];
         this.yellowrings = [];
+        this.customRings = [];
+        this.levels = new LevelsCollection();
+        this.iterator = this.levels.getIterator();
         this.score = 0;
         this.lifes = 3;
         this.cat = new Cat(5, 200);
         window.addEventListener("keydown", function (event) { return _this.cat.behaviour.onKeyDown(event); });
         window.addEventListener("keyup", function (event) { return _this.cat.behaviour.onKeyUp(event); });
-        Utils.makeSuperRings('black', this.blackrings, 3, this.cat);
-        Utils.makeSuperRings('yellow', this.yellowrings, 3, this.cat);
-        Utils.makeGreenRings(this.greenRings, 4, this.cat);
-        Utils.makeRedRings(this.redRings, 12, this.cat);
+        Utils.makeSuperRings('black', this.blackrings, 2, this.cat);
+        Utils.makeSuperRings('yellow', this.yellowrings, 2, this.cat);
+        var myRing = new CustomRing();
+        myRing = new PlusTwoLifes(myRing);
+        myRing = new WhiteRing(myRing);
+        myRing = new PlusThreeScore(myRing);
+        var myRing2 = new CustomRing();
+        myRing2 = new PurpleRing(myRing2);
+        myRing2 = new PlusTwoLifes(myRing2);
+        this.levels.addItem(new Level(12, 4));
+        this.levels.addItem(new Level(16, 6));
+        this.levels.addItem(new Level(20, 8));
+        this.levels.addItem(new Level(0, 0));
+        var currentLevel = this.iterator.current();
+        console.log('dit zijn de levels: ', this.levels);
+        Utils.makeCustomRing(myRing, this.customRings, this.cat);
+        Utils.makeCustomRing(myRing2, this.customRings, this.cat);
+        Utils.makeGreenRings(this.greenRings, currentLevel.getGreenRings(), this.cat);
+        Utils.makeRedRings(this.redRings, currentLevel.getRedRings(), this.cat);
         this.start = new Start(500, 50, this.cat);
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
@@ -309,7 +421,6 @@ var Game = (function () {
         var _this = this;
         this.cat.move();
         var dead = false;
-        console.log(this.blackrings);
         for (var i = 0; i < this.greenRings.length; i++) {
             this.greenRings[i].move();
             if (Utils.checkColission(this.cat, this.greenRings[i])) {
@@ -324,29 +435,55 @@ var Game = (function () {
             if (Utils.checkColission(this.cat, this.redRings[i])) {
                 Utils.removeFromGame(this.redRings[i], this.redRings);
                 this.score++;
+                console.log('aantal rode ringen: ', this.redRings.length);
+                console.log('aantal groene ringen: ', this.greenRings.length);
+                console.log('current leven is: ', this.iterator.current());
                 var scoreDiv = document.getElementById("score");
                 scoreDiv.innerHTML = "Score: " + this.score;
             }
         }
         if (this.redRings.length == 0) {
-            Utils.makeRedRings(this.redRings, 12, this.cat);
+            console.log('Door naar het volgende level: ', this.iterator.current());
+            console.log(this.iterator.valid());
+            this.iterator.next();
+            var currentLevel = this.iterator.current();
+            Utils.makeRedRings(this.redRings, currentLevel.getRedRings(), this.cat);
             for (var i = 0; i < this.greenRings.length; i++) {
                 Utils.removeFromGame(this.greenRings[i], this.greenRings);
                 this.score += 1;
             }
-            Utils.makeGreenRings(this.greenRings, 4, this.cat);
+            Utils.makeGreenRings(this.greenRings, currentLevel.getGreenRings(), this.cat);
         }
         if (this.blackrings.length === 0) {
-            Utils.makeSuperRings('black', this.blackrings, 3, this.cat);
+            Utils.makeSuperRings('black', this.blackrings, 2, this.cat);
         }
         if (this.yellowrings.length === 0) {
-            Utils.makeSuperRings('yellow', this.yellowrings, 3, this.cat);
+            Utils.makeSuperRings('yellow', this.yellowrings, 2, this.cat);
         }
         for (var i = 0; i < this.blackrings.length; i++) {
             if (Utils.checkColission(this.cat, this.blackrings[i])) {
                 Utils.removeFromGame(this.blackrings[i], this.blackrings);
                 this.score -= 5;
                 this.lifes -= 1;
+                var scoreDiv = document.getElementById("score");
+                scoreDiv.innerHTML = "Score: " + this.score;
+            }
+        }
+        for (var i = 0; i < this.customRings.length; i++) {
+            var effect = this.customRings[i].effect();
+            var amount = this.customRings[i].amount();
+            if (Utils.checkColission(this.cat, this.customRings[i])) {
+                if (effect == 'lifes') {
+                    this.lifes += amount;
+                    var lifesDiv = document.getElementById("lifes");
+                    lifesDiv.innerHTML = "Lives: " + this.lifes;
+                }
+                else if (effect == 'score') {
+                    this.score += amount;
+                    var scoreDiv = document.getElementById("score");
+                    scoreDiv.innerHTML = "Score: " + this.score;
+                }
+                Utils.removeFromGame(this.customRings[i], this.customRings);
             }
         }
         for (var i = 0; i < this.yellowrings.length; i++) {
@@ -359,6 +496,13 @@ var Game = (function () {
             dead = true;
             var endDiv = document.getElementById("gameover");
             endDiv.innerHTML = "Game Over<br>Score: " + this.score;
+            TweenLite.to(endDiv, 2, { ease: SlowMo.ease.config(0.7, 0.7, false), y: 400 });
+        }
+        if (this.iterator.current().getRedRings() == 0 && this.iterator.current().getGreenRings() == 0) {
+            console.log(this.iterator.current());
+            dead = true;
+            var endDiv = document.getElementById("gameover");
+            endDiv.innerHTML = "All Levels Completed! <br>Score: " + this.score;
             TweenLite.to(endDiv, 2, { ease: SlowMo.ease.config(0.7, 0.7, false), y: 400 });
         }
         if (!dead)
@@ -392,6 +536,41 @@ var Idle = (function () {
         this.cat.upSpeed = this.cat.downSpeed = this.cat.leftSpeed = this.cat.rightSpeed = 0;
     };
     return Idle;
+}());
+var LevelsIterator = (function () {
+    function LevelsIterator(collection, reverse) {
+        if (reverse === void 0) { reverse = false; }
+        this.position = 0;
+        this.reverse = false;
+        this.collection = collection;
+        this.reverse = reverse;
+        if (reverse) {
+            this.position = collection.getCount() - 1;
+        }
+    }
+    LevelsIterator.prototype.rewind = function () {
+        this.position = this.reverse ?
+            this.collection.getCount() - 1 :
+            0;
+    };
+    LevelsIterator.prototype.current = function () {
+        return this.collection.getItems()[this.position];
+    };
+    LevelsIterator.prototype.key = function () {
+        return this.position;
+    };
+    LevelsIterator.prototype.next = function () {
+        var item = this.collection.getItems()[this.position];
+        this.position += this.reverse ? -1 : 1;
+        return item;
+    };
+    LevelsIterator.prototype.valid = function () {
+        if (this.reverse) {
+            return this.position >= 0;
+        }
+        return this.position < this.collection.getCount();
+    };
+    return LevelsIterator;
 }());
 var Moving = (function () {
     function Moving(c) {
@@ -431,6 +610,85 @@ var Moving = (function () {
     };
     return Moving;
 }());
+var RingOptions = (function (_super) {
+    __extends(RingOptions, _super);
+    function RingOptions() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return RingOptions;
+}(SuperRing));
+var PlusTwoLifes = (function (_super) {
+    __extends(PlusTwoLifes, _super);
+    function PlusTwoLifes(superRing) {
+        var _this = _super.call(this) || this;
+        _this.decoratedRing = superRing;
+        return _this;
+    }
+    PlusTwoLifes.prototype.getColor = function () {
+        return this.decoratedRing.getColor();
+    };
+    PlusTwoLifes.prototype.effect = function () {
+        return 'lifes';
+    };
+    PlusTwoLifes.prototype.amount = function () {
+        return 10;
+    };
+    return PlusTwoLifes;
+}(RingOptions));
+var PlusThreeScore = (function (_super) {
+    __extends(PlusThreeScore, _super);
+    function PlusThreeScore(superRing) {
+        var _this = _super.call(this) || this;
+        _this.decoratedRing = superRing;
+        return _this;
+    }
+    PlusThreeScore.prototype.getColor = function () {
+        return this.decoratedRing.getColor();
+    };
+    PlusThreeScore.prototype.effect = function () {
+        return 'score';
+    };
+    PlusThreeScore.prototype.amount = function () {
+        return 3;
+    };
+    return PlusThreeScore;
+}(RingOptions));
+var PurpleRing = (function (_super) {
+    __extends(PurpleRing, _super);
+    function PurpleRing(superRing) {
+        var _this = _super.call(this) || this;
+        _this.decoratedRing = superRing;
+        return _this;
+    }
+    PurpleRing.prototype.getColor = function () {
+        return 'purple';
+    };
+    PurpleRing.prototype.effect = function () {
+        return this.decoratedRing.effect();
+    };
+    PurpleRing.prototype.amount = function () {
+        return this.decoratedRing.amount();
+    };
+    return PurpleRing;
+}(RingOptions));
+var WhiteRing = (function (_super) {
+    __extends(WhiteRing, _super);
+    function WhiteRing(superRing) {
+        var _this = _super.call(this) || this;
+        _this.decoratedRing = superRing;
+        return _this;
+    }
+    WhiteRing.prototype.getColor = function () {
+        return 'white';
+    };
+    WhiteRing.prototype.effect = function () {
+        return this.decoratedRing.effect();
+    };
+    WhiteRing.prototype.amount = function () {
+        return this.decoratedRing.amount();
+    };
+    return WhiteRing;
+}(RingOptions));
 var Keys;
 (function (Keys) {
     Keys[Keys["UP"] = 87] = "UP";
