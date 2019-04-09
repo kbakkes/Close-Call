@@ -392,12 +392,11 @@ var Game = (function () {
         Utils.makeSuperRings('black', this.blackrings, 2, this.cat);
         Utils.makeSuperRings('yellow', this.yellowrings, 2, this.cat);
         var myRing = new CustomRing();
-        myRing = new PlusTwoLifes(myRing);
+        myRing = new AddTwoLifes(myRing);
         myRing = new WhiteRing(myRing);
-        myRing = new PlusThreeScore(myRing);
         var myRing2 = new CustomRing();
         myRing2 = new PurpleRing(myRing2);
-        myRing2 = new PlusTwoLifes(myRing2);
+        myRing2 = new AddThreeScore(myRing2);
         this.levels.addItem(new Level(12, 4));
         this.levels.addItem(new Level(16, 6));
         this.levels.addItem(new Level(20, 8));
@@ -617,41 +616,59 @@ var RingOptions = (function (_super) {
     }
     return RingOptions;
 }(SuperRing));
-var PlusTwoLifes = (function (_super) {
-    __extends(PlusTwoLifes, _super);
-    function PlusTwoLifes(superRing) {
+var AddTwoLifes = (function (_super) {
+    __extends(AddTwoLifes, _super);
+    function AddTwoLifes(superRing) {
         var _this = _super.call(this) || this;
         _this.decoratedRing = superRing;
         return _this;
     }
-    PlusTwoLifes.prototype.getColor = function () {
+    AddTwoLifes.prototype.getColor = function () {
         return this.decoratedRing.getColor();
     };
-    PlusTwoLifes.prototype.effect = function () {
+    AddTwoLifes.prototype.effect = function () {
         return 'lifes';
     };
-    PlusTwoLifes.prototype.amount = function () {
-        return 10;
+    AddTwoLifes.prototype.amount = function () {
+        return 2;
     };
-    return PlusTwoLifes;
+    return AddTwoLifes;
 }(RingOptions));
-var PlusThreeScore = (function (_super) {
-    __extends(PlusThreeScore, _super);
-    function PlusThreeScore(superRing) {
+var AddThreeScore = (function (_super) {
+    __extends(AddThreeScore, _super);
+    function AddThreeScore(superRing) {
         var _this = _super.call(this) || this;
         _this.decoratedRing = superRing;
         return _this;
     }
-    PlusThreeScore.prototype.getColor = function () {
+    AddThreeScore.prototype.getColor = function () {
         return this.decoratedRing.getColor();
     };
-    PlusThreeScore.prototype.effect = function () {
+    AddThreeScore.prototype.effect = function () {
         return 'score';
     };
-    PlusThreeScore.prototype.amount = function () {
+    AddThreeScore.prototype.amount = function () {
         return 3;
     };
-    return PlusThreeScore;
+    return AddThreeScore;
+}(RingOptions));
+var AddFourLifes = (function (_super) {
+    __extends(AddFourLifes, _super);
+    function AddFourLifes(superRing) {
+        var _this = _super.call(this) || this;
+        _this.decoratedRing = superRing;
+        return _this;
+    }
+    AddFourLifes.prototype.getColor = function () {
+        return this.decoratedRing.getColor();
+    };
+    AddFourLifes.prototype.effect = function () {
+        return 'lifes';
+    };
+    AddFourLifes.prototype.amount = function () {
+        return 10;
+    };
+    return AddFourLifes;
 }(RingOptions));
 var PurpleRing = (function (_super) {
     __extends(PurpleRing, _super);

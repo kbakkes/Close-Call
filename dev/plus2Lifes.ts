@@ -1,7 +1,7 @@
 /// <reference path="ringOptions.ts"/>
 
 
-class PlusTwoLifes extends RingOptions {
+class AddTwoLifes extends RingOptions {
 decoratedRing: SuperRing;
     
 constructor(superRing:SuperRing){
@@ -18,7 +18,7 @@ constructor(superRing:SuperRing){
     }
 
     public amount():number{
-        return 10
+        return 2
     }
 
     

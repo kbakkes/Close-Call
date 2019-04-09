@@ -52,6 +52,7 @@ class Utils{
 
         
         public static makeSuperRings(color:string,array:Array<any>,loops:number,s:Subject){
+            // New factory die Ringen kan maken op basis van kleur 
             let ringFactory = new RingFactory();
 
             for (let i=0; i<loops; i+=1) {

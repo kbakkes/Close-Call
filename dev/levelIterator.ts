@@ -1,16 +1,9 @@
 class LevelsIterator implements Iterator<string> {
     private collection: LevelsCollection;
 
-    /**
-     * Stores the current traversal position. An iterator may have a lot of
-     * other fields for storing iteration state, especially when it is supposed
-     * to work with a particular kind of collection.
-     */
+   //startpositie
     private position: number = 0;
 
-    /**
-     * This variable indicates the traversal direction.
-     */
     private reverse: boolean = false;
 
     constructor(collection: LevelsCollection, reverse: boolean = false) {
@@ -28,6 +21,7 @@ class LevelsIterator implements Iterator<string> {
             0;
     }
 
+    // return huidige positie
     public current(): any {
         return this.collection.getItems()[this.position];
     }
@@ -36,6 +30,7 @@ class LevelsIterator implements Iterator<string> {
         return this.position;
     }
 
+    // volende positie is huidige positie + 1 / andersom als reversed is
     public next(): any {
         const item = this.collection.getItems()[this.position];
         this.position += this.reverse ? -1 : 1;

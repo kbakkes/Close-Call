@@ -23,9 +23,9 @@ class Game {
     yellowrings = [];
     customRings = [];
 
-            // Iterator
-            public levels = new LevelsCollection();
-            public iterator = this.levels.getIterator();
+     // Iterator
+    public levels = new LevelsCollection();
+    public iterator = this.levels.getIterator();
         
 
     private score: number = 0;
@@ -43,36 +43,37 @@ class Game {
 
 
 
-        // decorator 
+        // decorator Custom rings aanmaken, stapelt instances op elkaar
         let myRing = new CustomRing();
-        myRing = new PlusTwoLifes(myRing);
+        myRing = new AddTwoLifes(myRing);
         myRing = new WhiteRing(myRing);
-        myRing = new PlusThreeScore(myRing);
 
         let myRing2 = new CustomRing();
         myRing2 = new PurpleRing(myRing2);
-        myRing2 = new PlusTwoLifes(myRing2);
+        myRing2 = new AddThreeScore(myRing2);
 
+
+        // iterator Nieuwe levels toevoegen aan de collection 
         this.levels.addItem(new Level(12,4));
         this.levels.addItem(new Level(16,6));
         this.levels.addItem(new Level(20,8));
         
-
-        //endgame
+        //endgame 
         this.levels.addItem(new Level(0,0));
 
         let currentLevel = this.iterator.current();
 
-
-        
-
         console.log('dit zijn de levels: ', this.levels);
 
   
-        // oude code vanaf hier
+        // Eerste wave aanmaken 
+
+        // Custom Rings aanmaken in alleen de eerste wave
         Utils.makeCustomRing(myRing,this.customRings,this.cat);
         Utils.makeCustomRing(myRing2,this.customRings,this.cat);
-        
+
+
+        // eerste wave met ring aantallen uit het huidige levelw
        Utils.makeGreenRings(this.greenRings,currentLevel.getGreenRings(),this.cat);
        Utils.makeRedRings(this.redRings,currentLevel.getRedRings(),this.cat);
 
