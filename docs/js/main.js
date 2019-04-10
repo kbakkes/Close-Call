@@ -209,7 +209,6 @@ var RingFactory = (function () {
                         return ring;
                     }
                 }
-                return array;
             }
         };
     }

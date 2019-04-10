@@ -24,7 +24,7 @@ createCustomRing = (ring:SuperRing,array:Array<any>, s:Subject) => {
 
 
 // Afhankelijk van welke kleur wordt er een yellow of black ring gemaakt. 
-createRings = (array:Array<any>,color:string, amount:number,s:Subject) => {
+createRings = (array:Array<GameObject>,color:string, amount:number,s:Subject) : GameObject => {
     for(let i=0; i < amount; i++){
         switch(color){
             case "yellow":{
@@ -42,9 +42,7 @@ createRings = (array:Array<any>,color:string, amount:number,s:Subject) => {
                 return ring;
             }
         }
-        return array; 
-    }
     }
 }
-
+}
 

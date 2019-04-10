@@ -17,6 +17,8 @@ constructor(superRing:SuperRing){
         return 'lifes'
     }
 
+
+    // superring amount + amount 
     public amount():number{
         return 2
     }
